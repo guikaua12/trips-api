@@ -9,4 +9,6 @@ export interface Trip {
     imagesUrl: string[];
     highlights: string[];
     maxGuests: number;
+    countryCode: string;
+    recommended: boolean;
 }

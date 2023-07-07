@@ -10,4 +10,6 @@ export interface UpdateTripDTO {
     imagesUrl?: string[];
     highlights?: string[];
     maxGuests?: number;
+    countryCode?: string;
+    recommended?: boolean;
 }

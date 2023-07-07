@@ -27,7 +27,9 @@ export class TripRepository implements ITripRepository {
                 'coverImage VARCHAR, ' +
                 'imagesUrl VARCHAR[], ' +
                 'highlights VARCHAR[], ' +
-                'maxGuests INTEGER' +
+                'maxGuests INTEGER,' +
+                'countryCode VARCHAR,' +
+                'recommended BOOLEAN DEFAULT FALSE' +
                 ')'
         );
     }
@@ -57,8 +59,6 @@ export class TripRepository implements ITripRepository {
 
         const trip = result.rows[0];
 
-        console.log(trip);
-
         return trip || null;
     }
     async deleteById(id: string): Promise<void | null> {
@@ -86,7 +86,7 @@ export class TripRepository implements ITripRepository {
         const uuid = v4();
 
         const result = await this.pool.query<Trip>(
-            `INSERT INTO ${TripRepository.TABLE_NAME} (id, name, location, description, startDate, endDate, pricePerDay, coverImage, imagesUrl, highlights, maxGuests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+            `INSERT INTO ${TripRepository.TABLE_NAME} (id, name, location, description, startDate, endDate, pricePerDay, coverImage, imagesUrl, highlights, maxGuests, countryCode, recommended) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
             [
                 uuid,
                 data.name,
@@ -99,6 +99,8 @@ export class TripRepository implements ITripRepository {
                 data.imagesUrl,
                 data.highlights,
                 data.maxGuests,
+                data.countryCode,
+                data.recommended,
             ]
         );
 
