@@ -1,12 +1,12 @@
 import { server } from '@/shared/server/server';
-import { connect, client } from '@/shared/database';
+import { connect, pool } from '@/shared/database';
 import { TripRepository } from '@/modules/trips/repositories/impl/TripRepository';
 require('dotenv').config();
 
 async function main() {
     await connect();
 
-    const tripRepository = new TripRepository(client);
+    const tripRepository = new TripRepository(pool);
     tripRepository.createTable().then(() => {
         console.log('Trips table created (if not exists)');
     });

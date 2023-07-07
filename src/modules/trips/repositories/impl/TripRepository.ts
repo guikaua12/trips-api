@@ -2,15 +2,16 @@ import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import { Client, QueryResult } from 'pg';
 
 export class TripRepository implements ITripRepository {
-    client: Client;
+    static TABLE_NAME = 'trips';
+    pool: Pool;
 
-    constructor(client: Client) {
-        this.client = client;
+    constructor(pool: Pool) {
+        this.pool = pool;
     }
 
     async createTable(): Promise<QueryResult<any>> {
-        return this.client.query(
-            'CREATE TABLE IF NOT EXISTS trips (' +
+        return this.pool.query(
+            `CREATE TABLE IF NOT EXISTS ${TripRepository.TABLE_NAME} (` +
                 'id VARCHAR PRIMARY KEY, ' +
                 'name VARCHAR, ' +
                 'description VARCHAR, ' +
