@@ -65,11 +65,12 @@ export class TripRepository implements ITripRepository {
         const uuid = v4();
 
         const result = await this.pool.query<Trip>(
-            `INSERT INTO ${TripRepository.TABLE_NAME} (id, name, description, startDate, endDate, pricePerDay, coverImage, imagesUrl, highlights, maxGuests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
+            `INSERT INTO ${TripRepository.TABLE_NAME} (id, name, location, description, startDate, endDate, pricePerDay, coverImage, imagesUrl, highlights, maxGuests) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *`,
             [
                 uuid,
                 data.name,
                 data.description,
+                data.location,
                 data.startDate,
                 data.endDate,
                 data.pricePerDay,
