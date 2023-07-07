@@ -4,6 +4,7 @@ import { Trip } from '@/modules/trips/models/Trip';
 import { UpdateTripDTO } from '@/modules/trips/dtos/UpdateTripDTO';
 import { CreateTripDTO } from '@/modules/trips/dtos/CreateTripDTO';
 import { v4 } from 'uuid';
+import { SearchTripDTO } from '@/modules/trips/dtos/SearchTripDTO';
 
 export class TripRepository implements ITripRepository {
     static TABLE_NAME = 'trips';
@@ -29,6 +30,26 @@ export class TripRepository implements ITripRepository {
                 'maxGuests INTEGER' +
                 ')'
         );
+    }
+
+    async search({ location, startDate, pricePerDay }: SearchTripDTO): Promise<Trip[]> {
+        const query: string[] = [];
+
+        if (location && location.trim().length) {
+            query.push(`location LIKE '${location}'`);
+        }
+
+        if (pricePerDay) {
+            query.push(`pricePerDay <= '${pricePerDay}'`);
+        }
+
+        if (query.length === 0) return [];
+
+        const result = await this.pool.query<Trip>(
+            `SELECT * FROM ${TripRepository.TABLE_NAME} WHERE ${query.join(' AND ')}`
+        );
+
+        return result.rows;
     }
 
     async getById(id: string): Promise<Trip | null> {

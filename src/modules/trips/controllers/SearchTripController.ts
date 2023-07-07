@@ -1,0 +1,14 @@
+import { SearchTripUseCase } from '@/modules/trips/useCases/SearchTripUseCase';
+import { Request, Response } from 'express';
+
+export class SearchTripController {
+    constructor(private searchTripUseCase: SearchTripUseCase) {}
+
+    async handle(req: Request, res: Response) {
+        const { location, startDate, pricePerDay } = req.body;
+
+        const trips = await this.searchTripUseCase.execute({ location, startDate, pricePerDay });
+
+        res.status(200).json(trips);
+    }
+}
