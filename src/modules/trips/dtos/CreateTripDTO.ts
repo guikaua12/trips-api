@@ -1,6 +1,7 @@
 export interface CreateTripDTO {
     name: string;
     description: string;
+    location: string;
     startDate: Date;
     endDate: Date;
     pricePerDay: number;
