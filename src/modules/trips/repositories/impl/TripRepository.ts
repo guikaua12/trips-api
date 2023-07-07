@@ -18,6 +18,7 @@ export class TripRepository implements ITripRepository {
             `CREATE TABLE IF NOT EXISTS ${TripRepository.TABLE_NAME} (` +
                 'id VARCHAR PRIMARY KEY, ' +
                 'name VARCHAR, ' +
+                'location VARCHAR,' +
                 'description VARCHAR, ' +
                 'startDate DATE, ' +
                 'endDate DATE, ' +

@@ -1,6 +1,7 @@
 export interface UpdateTripDTO {
     id: string;
     name?: string;
+    location: string;
     description?: string;
     startDate?: Date;
     endDate?: Date;
