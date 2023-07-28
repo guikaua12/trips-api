@@ -7,15 +7,9 @@ require('dotenv').config();
 
 async function main() {
     await connect();
-    new TripRepository(pool).createTable().then(() => {
-        console.log('Trips table created (if not exists)');
-    });
-    new UserRepository(pool).createTable().then(() => {
-        console.log('Users table created (if not exists)');
-    });
-    new SessionRepository(pool).createTable().then(() => {
-        console.log('Session table created (if not exists)');
-    });
+    await new TripRepository(pool).createTable();
+    await new UserRepository(pool).createTable();
+    await new SessionRepository(pool).createTable();
 
     const port = process.env.port;
     server.listen(port, () => {
