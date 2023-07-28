@@ -2,6 +2,7 @@ import { server } from '@/shared/server/server';
 import { connect, pool } from '@/shared/database';
 import { TripRepository } from '@/modules/trips/repositories/TripRepository';
 import { UserRepository } from '@/modules/users/repositories/UserRepository';
+import { SessionRepository } from '@/modules/sessions/repositories/SessionRepository';
 require('dotenv').config();
 
 async function main() {
@@ -11,6 +12,9 @@ async function main() {
     });
     new UserRepository(pool).createTable().then(() => {
         console.log('Users table created (if not exists)');
+    });
+    new SessionRepository(pool).createTable().then(() => {
+        console.log('Session table created (if not exists)');
     });
 
     const port = process.env.port;
