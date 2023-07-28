@@ -1,4 +1,4 @@
-import { TripRepository } from '@/modules/trips/repositories/impl/TripRepository';
+import { TripRepository } from '@/modules/trips/repositories/TripRepository';
 import { pool } from '@/shared/database';
 import { SearchTripUseCase } from '@/modules/trips/useCases/SearchTripUseCase';
 import { SearchTripController } from '@/modules/trips/controllers/SearchTripController';
