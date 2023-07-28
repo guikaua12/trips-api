@@ -34,7 +34,7 @@ export class TripRepository implements ITripRepository {
         );
     }
 
-    async search({ location, startDate, pricePerDay }: SearchTripDTO): Promise<Trip[]> {
+    async search({ location, startDate, pricePerDay, recommended }: SearchTripDTO): Promise<Trip[]> {
         const query: string[] = [];
 
         if (location && location.trim().length) {
@@ -43,6 +43,10 @@ export class TripRepository implements ITripRepository {
 
         if (pricePerDay) {
             query.push(`pricePerDay <= '${pricePerDay}'`);
+        }
+
+        if (typeof recommended !== 'undefined') {
+            query.push(`recommended = '${recommended}'`);
         }
 
         if (query.length === 0) return [];
