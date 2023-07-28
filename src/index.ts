@@ -6,9 +6,7 @@ require('dotenv').config();
 
 async function main() {
     await connect();
-
-    const tripRepository = new TripRepository(pool);
-    tripRepository.createTable().then(() => {
+    new TripRepository(pool).createTable().then(() => {
         console.log('Trips table created (if not exists)');
     });
     new UserRepository(pool).createTable().then(() => {
