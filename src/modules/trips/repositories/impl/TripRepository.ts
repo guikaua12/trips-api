@@ -17,19 +17,19 @@ export class TripRepository implements ITripRepository {
     async createTable(): Promise<QueryResult<any>> {
         return this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${TripRepository.TABLE_NAME} (` +
-                'id VARCHAR PRIMARY KEY, ' +
-                'name VARCHAR, ' +
-                'location VARCHAR,' +
-                'description VARCHAR, ' +
-                'startDate DATE, ' +
-                'endDate DATE, ' +
-                'pricePerDay DECIMAL(8,2), ' +
-                'coverImage VARCHAR, ' +
-                'imagesUrl VARCHAR[], ' +
-                'highlights VARCHAR[], ' +
-                'maxGuests INTEGER,' +
-                'countryCode VARCHAR,' +
-                'recommended BOOLEAN DEFAULT FALSE' +
+                '"id" VARCHAR PRIMARY KEY, ' +
+                '"name" VARCHAR, ' +
+                '"location" VARCHAR,' +
+                '"description" VARCHAR, ' +
+                '"startDate" DATE, ' +
+                '"endDate" DATE, ' +
+                '"pricePerDay" DECIMAL(8,2), ' +
+                '"coverImage" VARCHAR, ' +
+                '"imagesUrl" VARCHAR[], ' +
+                '"highlights" VARCHAR[], ' +
+                '"maxGuests" INTEGER,' +
+                '"countryCode" VARCHAR,' +
+                '"recommended" BOOLEAN DEFAULT FALSE' +
                 ')'
         );
     }
