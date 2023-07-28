@@ -38,15 +38,15 @@ export class TripRepository implements ITripRepository {
         const query: string[] = [];
 
         if (location && location.trim().length) {
-            query.push(`location LIKE '${location}'`);
+            query.push(`"location" LIKE '${location}'`);
         }
 
         if (pricePerDay) {
-            query.push(`pricePerDay <= '${pricePerDay}'`);
+            query.push(`"pricePerDay" <= '${pricePerDay}'`);
         }
 
         if (typeof recommended !== 'undefined') {
-            query.push(`recommended = '${recommended}'`);
+            query.push(`"recommended" = '${recommended}'`);
         }
 
         if (query.length === 0) return [];
