@@ -14,9 +14,10 @@ export class UserRepository implements IUserRepository {
     async createTable(): Promise<QueryResult<any>> {
         return this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${UserRepository.TABLE_NAME} (
-                "id" VARCHAR PRIMARY KEY,
-                "email" VARCHAR, 
-                "password" VARCHAR`
+                "id" VARCHAR NOT NULL PRIMARY KEY,
+                "email" VARCHAR NOT NULL, 
+                "password" VARCHAR NOT NULL
+            )`
         );
     }
 
