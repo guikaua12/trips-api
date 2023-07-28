@@ -4,7 +4,7 @@ import { CreateUserDTO } from '@/modules/users/dtos/CreateUserDTO';
 import { User } from '@/modules/users/models/User';
 import { pool } from '@/shared/database';
 import { v4 } from 'uuid';
-import { hash, match } from '@/shared/utils/passwordUtils';
+import { hash } from '@/shared/utils/passwordUtils';
 import { SearchUserDTO } from '@/modules/users/dtos/SearchUserDTO';
 
 export class UserRepository implements IUserRepository {
