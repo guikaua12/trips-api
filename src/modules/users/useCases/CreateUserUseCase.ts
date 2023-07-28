@@ -17,6 +17,9 @@ export class CreateUserUseCase {
             }
         }
 
+        const user = await this.userRepository.search({ email });
+        if (user) throw new AppError(409, 'User already exists');
+
         return await this.userRepository.create({ email, password });
     }
 }
