@@ -1,3 +1,5 @@
+import * as process from 'process';
+
 require('dotenv').config();
 import { Pool } from 'pg';
 export const pool = new Pool({
@@ -8,6 +10,7 @@ export async function connect() {
     return pool.connect((err) => {
         if (err) {
             console.error(err);
+            process.exit();
             return;
         }
 
