@@ -3,6 +3,7 @@ import { Pool, QueryResult } from 'pg';
 import { ISessionRepository } from '@/modules/sessions/repositories/ISessionRepository';
 import { Session } from '@/modules/sessions/models/Session';
 import { CreateSessionDTO } from '@/modules/sessions/dtos/CreateSessionDTO';
+import { UserRepository } from '@/modules/users/repositories/UserRepository';
 
 export class SessionRepository implements ISessionRepository {
     public static TABLE_NAME = 'sessions';
@@ -12,8 +13,9 @@ export class SessionRepository implements ISessionRepository {
         return this.pool.query(`CREATE TABLE IF NOT EXISTS ${SessionRepository.TABLE_NAME} (
             "session" VARCHAR PRIMARY KEY, 
             "user_id" VARCHAR NOT NULL , 
-            "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-            "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+            "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY ("user_id") REFERENCES ${UserRepository.TABLE_NAME} ("id")
         )`);
     }
 
