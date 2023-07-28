@@ -53,7 +53,7 @@ export class UserRepository implements IUserRepository {
             query.push(`"email" = '${email}'`);
         }
 
-        if (query.length === 0) return null;
+        if (!query.length) return null;
 
         const result = await this.pool.query<User>(
             `SELECT * FROM ${UserRepository.TABLE_NAME} WHERE ${query.join(' AND ')}`
