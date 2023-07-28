@@ -4,12 +4,14 @@ import { getTripFactory } from '@/modules/trips/factories/GetTripFactory';
 
 const tripsRouter = Router();
 
-tripsRouter.post('/search', async (req, res) => {
-    await searchTripFactory().handle(req, res);
-});
+const searchTripController = searchTripFactory();
+const getTripController = getTripFactory();
 
 tripsRouter.get('/:id', async (req, res) => {
-    await getTripFactory().handle(req, res);
+    await getTripController.handle(req, res);
+});
+tripsRouter.post('/search', async (req, res) => {
+    await searchTripController.handle(req, res);
 });
 
 export { tripsRouter };
