@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { getUserFactory } from '@/modules/users/factories/GetUserFactory';
+import { searchUserFactory } from '@/modules/users/factories/SearchUserFactory';
 import { createUserFactory } from '@/modules/users/factories/CreateUserFactory';
 
 const userRouter = Router();
 
-const getUserController = getUserFactory();
+const searchUserController = searchUserFactory();
 const createUserController = createUserFactory();
 
-userRouter.get('/:id', async (req, res) => {
-    await getUserController.handle(req, res);
+userRouter.get('/', async (req, res) => {
+    await searchUserController.handle(req, res);
 });
 
 userRouter.post('/create', async (req, res) => {

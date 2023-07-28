@@ -2,7 +2,7 @@ import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
 import { User } from '@/modules/users/models/User';
 import { AppError } from '@/shared/errors/AppError';
 
-export class GetUserUseCase {
+export class SearchUserUseCase {
     constructor(private userRepository: IUserRepository) {}
 
     async execute(id: string): Promise<User> {

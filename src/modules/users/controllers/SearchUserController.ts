@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { GetUserUseCase } from '@/modules/users/useCases/GetUserUseCase';
+import { SearchUserUseCase } from '@/modules/users/useCases/SearchUserUseCase';
 
-export class GetUserController {
-    constructor(private useCase: GetUserUseCase) {}
+export class SearchUserController {
+    constructor(private useCase: SearchUserUseCase) {}
 
     async handle(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
