@@ -1,7 +1,9 @@
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { SearchTripDTO } from '@/modules/trips/dtos/SearchTripDTO';
+import { SearchTripDTO, SearchTripDTOSchema } from '@/modules/trips/dtos/SearchTripDTO';
 import { Trip } from '@/modules/trips/models/Trip';
 import { AppError } from '@/shared/errors/AppError';
+import { ZodError } from 'zod';
+import { zodToString } from '@/shared/utils';
 
 export class SearchTripUseCase {
     constructor(private tripRepository: ITripRepository) {}
