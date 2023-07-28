@@ -10,7 +10,8 @@ export class GetUserController {
         const user = await this.useCase.execute(id);
 
         res.status(200).json({
-            user,
+            id: user.id,
+            email: user.email,
         });
     }
 }

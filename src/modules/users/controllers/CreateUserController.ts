@@ -10,7 +10,8 @@ export class CreateUserController {
         const user = await this.useCase.execute({ email, password });
 
         res.status(200).json({
-            user,
+            id: user.id,
+            email: user.email,
         });
     }
 }
