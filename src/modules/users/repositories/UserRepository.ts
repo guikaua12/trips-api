@@ -42,8 +42,22 @@ export class UserRepository implements IUserRepository {
         );
     }
 
-    async getById(id: string): Promise<User | null> {
-        const result = await pool.query<User>(`SELECT * FROM ${UserRepository.TABLE_NAME} WHERE "id" = $1`, [id]);
+    async search({ id, email }: SearchUserDTO): Promise<User | null> {
+        const query: string[] = [];
+
+        if (id && id.trim().length) {
+            query.push(`"id" = '${id}'`);
+        }
+
+        if (email && email.trim().length) {
+            query.push(`"email" = '${email}'`);
+        }
+
+        if (query.length === 0) return null;
+
+        const result = await this.pool.query<User>(
+            `SELECT * FROM ${UserRepository.TABLE_NAME} WHERE ${query.join(' AND ')}`
+        );
 
         return result.rows[0] || null;
     }

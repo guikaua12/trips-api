@@ -5,9 +5,9 @@ export class SearchUserController {
     constructor(private useCase: SearchUserUseCase) {}
 
     async handle(req: Request, res: Response): Promise<void> {
-        const id = req.params.id;
+        const { id, email } = req.body;
 
-        const user = await this.useCase.execute(id);
+        const user = await this.useCase.execute({ id, email });
 
         res.status(200).json({
             id: user.id,
