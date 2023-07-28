@@ -4,6 +4,8 @@ import { CreateUserDTO } from '@/modules/users/dtos/CreateUserDTO';
 import { User } from '@/modules/users/models/User';
 import { pool } from '@/shared/database';
 import { v4 } from 'uuid';
+import { hash, match } from '@/shared/utils/passwordUtils';
+import { SearchUserDTO } from '@/modules/users/dtos/SearchUserDTO';
 
 export class UserRepository implements IUserRepository {
     public static TABLE_NAME = 'users';
@@ -21,10 +23,11 @@ export class UserRepository implements IUserRepository {
 
     async create(data: CreateUserDTO): Promise<User> {
         const uuid = v4();
+        const hashedPassword = await hash(data.password);
 
         const result = await pool.query<User>(
             `INSERT INTO ${UserRepository.TABLE_NAME} ("id", "email", "password") VALUES ($1, $2, $3) RETURNING *`,
-            [uuid, data.email, data.password]
+            [uuid, data.email, hashedPassword]
         );
 
         return result.rows[0];
