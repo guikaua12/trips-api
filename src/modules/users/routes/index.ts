@@ -9,7 +9,7 @@ const searchUserController = searchUserFactory();
 const createUserController = createUserFactory();
 const loginUserController = loginUserFactory();
 
-userRouter.get('/', async (req, res) => {
+userRouter.get('/search', async (req, res) => {
     await searchUserController.handle(req, res);
 });
 
