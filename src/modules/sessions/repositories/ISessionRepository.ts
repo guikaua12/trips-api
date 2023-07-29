@@ -6,4 +6,5 @@ export interface ISessionRepository {
     create(session: Session): Promise<Session>;
     delete(session: string): Promise<void>;
     find(session: string): Promise<Session | null>;
+    findValid(session: string, time: string): Promise<Session | null>;
 }

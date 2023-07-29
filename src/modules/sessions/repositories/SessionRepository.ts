@@ -40,4 +40,13 @@ export class SessionRepository implements ISessionRepository {
 
         return result.rows[0];
     }
+
+    async findValid(session: string, time: string): Promise<Session | null> {
+        const result = await this.pool.query<Session>(
+            `SELECT * FROM ${SessionRepository.TABLE_NAME} WHERE "session" = $1 AND "updated_at" > NOW() - INTERVAL '${time}'`,
+            [session]
+        );
+
+        return result.rows[0] || null;
+    }
 }

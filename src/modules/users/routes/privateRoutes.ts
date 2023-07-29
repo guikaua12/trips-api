@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { searchUserFactory } from '@/modules/users/factories/SearchUserFactory';
 import { createUserFactory } from '@/modules/users/factories/CreateUserFactory';
-import { sessionVerify } from '@/modules/users/middlewares/sessionVerify';
+import { sessionVerify } from '@/shared/middlewares/sessionVerify';
 
 const searchUserController = searchUserFactory();
 const createUserController = createUserFactory();
