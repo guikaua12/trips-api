@@ -1,6 +1,6 @@
 import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
 import { Pool, QueryResult } from 'pg';
-import { CreateUserDTO } from '@/modules/users/dtos/CreateUserDTO';
+import { RegisterUserDTO } from '@/modules/users/dtos/RegisterUserDTO';
 import { User } from '@/modules/users/models/User';
 import { pool } from '@/shared/database';
 import { v4 } from 'uuid';
@@ -21,7 +21,7 @@ export class UserRepository implements IUserRepository {
         );
     }
 
-    async create(data: CreateUserDTO): Promise<User> {
+    async create(data: RegisterUserDTO): Promise<User> {
         const uuid = v4();
         const hashedPassword = await hash(data.password);
 

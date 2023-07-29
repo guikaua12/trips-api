@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { CreateUserUseCase } from '@/modules/users/useCases/CreateUserUseCase';
+import { RegisterUserUseCase } from '@/modules/users/useCases/RegisterUserUseCase';
 import { randomHash } from '@/shared/utils/randomUtils';
 import { CreateSessionUseCase } from '@/modules/sessions/useCases/CreateSessionUseCase';
-export class CreateUserController {
+export class RegisterUserController {
     constructor(
-        private useCase: CreateUserUseCase,
+        private useCase: RegisterUserUseCase,
         private createSessionUseCase: CreateSessionUseCase
     ) {}
 

@@ -1,16 +1,16 @@
 import { UserRepository } from '@/modules/users/repositories/UserRepository';
 import { pool } from '@/shared/database';
-import { CreateUserUseCase } from '@/modules/users/useCases/CreateUserUseCase';
-import { CreateUserController } from '@/modules/users/controllers/CreateUserController';
+import { RegisterUserUseCase } from '@/modules/users/useCases/RegisterUserUseCase';
+import { RegisterUserController } from '@/modules/users/controllers/RegisterUserController';
 import { SessionRepository } from '@/modules/sessions/repositories/SessionRepository';
 import { CreateSessionUseCase } from '@/modules/sessions/useCases/CreateSessionUseCase';
 
-export function createUserFactory() {
+export function registerUserFactory() {
     const userRepository = new UserRepository(pool);
-    const createUserUseCase = new CreateUserUseCase(userRepository);
+    const registerUserUseCase = new RegisterUserUseCase(userRepository);
 
     const sessionRepository = new SessionRepository(pool);
     const createSessionUseCase = new CreateSessionUseCase(sessionRepository);
 
-    return new CreateUserController(createUserUseCase, createSessionUseCase);
+    return new RegisterUserController(registerUserUseCase, createSessionUseCase);
 }

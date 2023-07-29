@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const CreateUserDTOSchema = z.object({
+export const RegisterUserDTOSchema = z.object({
     email: z
         .string({
             required_error: 'E-mail is required',
@@ -15,4 +15,4 @@ export const CreateUserDTOSchema = z.object({
         .min(6, 'Password must have at least 6 characters'),
 });
 
-export type CreateUserDTO = z.infer<typeof CreateUserDTOSchema>;
+export type RegisterUserDTO = z.infer<typeof RegisterUserDTOSchema>;
