@@ -5,10 +5,10 @@ import { userPrivateRouter } from '@/modules/users/routes/privateRoutes';
 
 const router = Router();
 
-router.use('/trips', tripsRouter);
-router.use('/users', userRouter);
-router.use('/users', userPrivateRouter);
-router.use('/', async (req, res) => {
+router.use('/api/trips', tripsRouter);
+router.use('/api/users', userRouter);
+router.use('/api/users', userPrivateRouter);
+router.use('/api', async (req, res) => {
     res.send('Hello World!');
 });
 
