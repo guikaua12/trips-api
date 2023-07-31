@@ -16,8 +16,11 @@ export class LoginUserController {
         const session = await this.createSessionUseCase.execute({ session: randomHash(), user_id: user.id });
 
         return res.status(200).json({
-            id: user.id,
-            email: user.email,
+            user: {
+                id: user.id,
+                email: user.email,
+            },
+
             session: session.session,
         });
     }

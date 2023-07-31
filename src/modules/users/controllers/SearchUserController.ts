@@ -10,8 +10,10 @@ export class SearchUserController {
         const user = await this.useCase.execute({ id, email });
 
         res.status(200).json({
-            id: user.id,
-            email: user.email,
+            user: {
+                id: user.id,
+                email: user.email,
+            },
         });
     }
 }
