@@ -4,7 +4,7 @@ import { verifySessionFactory } from '@/modules/sessions/factories/VerifySession
 const sessionRouter = Router();
 
 const verifySessionController = verifySessionFactory();
-sessionRouter.get('/verify', async (req: Request, res: Response) => {
+sessionRouter.get('/verify/:session', async (req: Request, res: Response) => {
     await verifySessionController.handle(req, res);
 });
 

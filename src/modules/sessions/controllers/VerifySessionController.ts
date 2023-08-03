@@ -4,7 +4,7 @@ import { VerifySessionUseCase } from '@/modules/sessions/useCases/VerifySessionU
 export class VerifySessionController {
     constructor(private useCase: VerifySessionUseCase) {}
     async handle(req: Request, res: Response) {
-        const { session } = req.body;
+        const session = req.params.session;
 
         const validSession = await this.useCase.execute({ session });
 
