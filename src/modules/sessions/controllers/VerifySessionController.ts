@@ -6,10 +6,13 @@ export class VerifySessionController {
     async handle(req: Request, res: Response) {
         const session = req.params.session;
 
-        const validSession = await this.useCase.execute({ session });
+        const user = await this.useCase.execute({ session });
 
         return res.status(200).json({
-            valid: validSession,
+            user: {
+                id: user.id,
+                email: user.email,
+            },
         });
     }
 }

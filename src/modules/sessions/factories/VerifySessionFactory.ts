@@ -3,9 +3,12 @@ import { SessionRepository } from '@/modules/sessions/repositories/SessionReposi
 import { pool } from '@/shared/database';
 import { VerifySessionUseCase } from '@/modules/sessions/useCases/VerifySessionUseCase';
 import { VerifySessionController } from '@/modules/sessions/controllers/VerifySessionController';
+import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
+import { UserRepository } from '@/modules/users/repositories/UserRepository';
 
 export function verifySessionFactory() {
     const sessionRepository: ISessionRepository = new SessionRepository(pool);
-    const verifySessionUseCase = new VerifySessionUseCase(sessionRepository);
+    const userRepository: IUserRepository = new UserRepository(pool);
+    const verifySessionUseCase = new VerifySessionUseCase(sessionRepository, userRepository);
     return new VerifySessionController(verifySessionUseCase);
 }
