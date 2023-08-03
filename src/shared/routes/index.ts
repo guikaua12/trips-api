@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { tripsRouter } from '@/modules/trips/routes';
+import { sessionRouter } from '@/modules/sessions/routes';
 import { userRouter } from '@/modules/users/routes';
 import { userPrivateRouter } from '@/modules/users/routes/privateRoutes';
 
 const router = Router();
 
 router.use('/api/trips', tripsRouter);
+router.use('/api/session', sessionRouter);
 router.use('/api/users', userRouter);
 router.use('/api/users', userPrivateRouter);
 router.use('/api', async (req, res) => {
