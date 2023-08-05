@@ -11,4 +11,5 @@ export interface ITripRepository {
     deleteById(id: string): Promise<void | null>;
     updateById(data: UpdateTripDTO): Promise<Trip | null>;
     create(data: CreateTripDTO): Promise<Trip>;
+    createMany(data: CreateTripDTO[]): Promise<Trip[]>;
 }

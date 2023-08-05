@@ -110,4 +110,14 @@ export class TripRepository implements ITripRepository {
 
         return result.rows[0];
     }
+    async createMany(data: CreateTripDTO[]): Promise<Trip[]> {
+        const trips: Trip[] = [];
+
+        for (const dto of data) {
+            const result = await this.create(dto);
+            trips.push(result);
+        }
+
+        return trips;
+    }
 }
