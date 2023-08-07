@@ -12,7 +12,7 @@ export async function sessionVerify(req: Request, res: Response, next: NextFunct
         throw new AppError(401, 'Unauthorized');
     }
 
-    const session = await sessionRepository.findValid(authorization, process.env.SESSION_EXPIRY! || '30 MINUTES');
+    const session = await sessionRepository.findValid(authorization, process.env.SESSION_EXPIRY || '30 MINUTES');
 
     if (!session) {
         throw new AppError(401, 'Unauthorized');
