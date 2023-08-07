@@ -1,19 +1,19 @@
 import { Router } from 'express';
 import { searchUserFactory } from '@/modules/users/factories/SearchUserFactory';
-import { sessionVerify } from '@/shared/middlewares/sessionVerify';
+import { tokenVerify } from '@/shared/middlewares/tokenVerify';
+import { verifyTokenFactory } from '@/modules/users/factories/VerifyTokenFactory';
 
 const searchUserController = searchUserFactory();
+const verifyTokenController = verifyTokenFactory();
 
 const userPrivateRouter = Router();
-userPrivateRouter.use(sessionVerify);
+userPrivateRouter.use(tokenVerify);
 
 userPrivateRouter.get('/search', async (req, res) => {
     await searchUserController.handle(req, res);
 });
 userPrivateRouter.get('/verify-token', async (req, res) => {
-    res.status(200).json({
-        valid: true,
-    });
+    await verifyTokenController.handle(req, res);
 });
 
 export { userPrivateRouter };
