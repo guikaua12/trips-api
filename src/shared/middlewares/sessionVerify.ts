@@ -1,20 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '@/shared/errors/AppError';
-import { SessionRepository } from '@/modules/sessions/repositories/SessionRepository';
-import { pool } from '@/shared/database';
+import { parse } from '@/shared/utils/jwt';
 
-const sessionRepository = new SessionRepository(pool);
-
-export async function sessionVerify(req: Request, res: Response, next: NextFunction) {
+export async function sessionVerify(req: Request | any, res: Response, next: NextFunction) {
     const authorization = req.headers.authorization;
+    const token = authorization?.split(' ')[1];
 
-    if (!authorization) {
+    if (!authorization || !token) {
         throw new AppError(401, 'Unauthorized');
     }
 
-    const session = await sessionRepository.findValid(authorization, process.env.SESSION_EXPIRY || '30 MINUTES');
-
-    if (!session) {
+    try {
+        const decoded = parse(token);
+        req.userId = decoded.id;
+    } catch (err) {
         throw new AppError(401, 'Unauthorized');
     }
 
