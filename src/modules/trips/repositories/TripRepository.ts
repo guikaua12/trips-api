@@ -94,8 +94,8 @@ export class TripRepository implements ITripRepository {
             [
                 uuid,
                 data.name,
-                data.description,
                 data.location,
+                data.description,
                 data.startDate,
                 data.endDate,
                 data.pricePerDay,
