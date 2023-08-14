@@ -7,7 +7,7 @@ const tripsRouter = Router();
 const searchTripController = searchTripFactory();
 const getTripController = getTripFactory();
 
-tripsRouter.get('/search', async (req, res) => {
+tripsRouter.post('/search', async (req, res) => {
     await searchTripController.handle(req, res);
 });
 
