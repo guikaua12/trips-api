@@ -2,11 +2,13 @@ import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import { router } from '@/shared/routes';
 import { AppError } from '@/shared/errors/AppError';
+import { dateParseMiddleware } from '@/shared/middlewares/dateParseMiddleware';
 const cors = require('cors');
 
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.use(dateParseMiddleware);
 server.use(router);
 
 // error handling
