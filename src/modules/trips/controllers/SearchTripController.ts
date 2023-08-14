@@ -9,6 +9,8 @@ export class SearchTripController {
 
         const trips = await this.searchTripUseCase.execute({ location, startDate, pricePerDay, recommended });
 
-        res.status(200).json(trips);
+        res.status(200).json({
+            trips,
+        });
     }
 }
