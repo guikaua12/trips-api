@@ -44,6 +44,7 @@ export class ReserveTripUseCase {
             startDate: tripReservation.startDate,
             endDate: tripReservation.endDate,
             totalPaid: tripReservation.totalPaid,
+            status: tripReservation.status,
         };
 
         return tripReservationResponse;

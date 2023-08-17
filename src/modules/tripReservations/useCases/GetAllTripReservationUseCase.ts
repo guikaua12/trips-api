@@ -23,6 +23,7 @@ export class GetAllTripReservationUseCase {
                     startDate: tripReservation.startDate,
                     endDate: tripReservation.endDate,
                     totalPaid: tripReservation.totalPaid,
+                    status: tripReservation.status,
                 };
             })
         );
