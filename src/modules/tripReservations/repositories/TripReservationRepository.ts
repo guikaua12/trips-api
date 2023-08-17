@@ -9,7 +9,14 @@ export class TripReservationRepository implements ITripReservationRepository {
     constructor(private pool: Pool) {}
     async createTable(): Promise<QueryResult<any>> {
         return this.pool.query(
-            `CREATE TABLE IF NOT EXISTS ${TripReservationRepository.TABLE_NAME} ("id" VARCHAR PRIMARY KEY, "tripId" VARCHAR, "userId" VARCHAR, "startDate" DATE, "endDate" DATE, "totalPaid" DECIMAL(8,2))`
+            `CREATE TABLE IF NOT EXISTS ${TripReservationRepository.TABLE_NAME} (
+                "id" VARCHAR PRIMARY KEY, 
+                "tripId" VARCHAR, 
+                "userId" VARCHAR, 
+                "startDate" DATE, 
+                "endDate" DATE, 
+                "totalPaid" DECIMAL(8,2)
+                )`
         );
     }
 
