@@ -4,6 +4,7 @@ import { TripReservation } from '@/modules/tripReservations/models/TripReservati
 import { Pool, QueryResult } from 'pg';
 import { v4 } from 'uuid';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/dtos/UpdateTripReservationDTO';
+import { GetAllTripReservationDTO } from '@/modules/tripReservations/dtos/GetAllTripReservationDTO';
 
 export class TripReservationRepository implements ITripReservationRepository {
     public static TABLE_NAME = 'trips_reservations';
@@ -46,7 +47,7 @@ export class TripReservationRepository implements ITripReservationRepository {
 
     async getByDateRange(id: string, startDate: Date, endDate: Date): Promise<TripReservation | null> {
         const result = await this.pool.query<TripReservation>(
-            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "tripId" = $1 AND "startDate" <= $2 AND "endDate" >= $3`,
+            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "tripId" = $1 AND "startDate" <= $2 AND "endDate" >= $3 AND "status" != 'cancelled'`,
             [id, endDate, startDate]
         );
 
@@ -72,7 +73,19 @@ export class TripReservationRepository implements ITripReservationRepository {
         return result.rows[0];
     }
 
-    async getAll(userId: string): Promise<TripReservation[]> {
+    async getAll({ id, page }: GetAllTripReservationDTO): Promise<TripReservation[]> {
+        const limitPerPage = 5;
+        const offset = (page - 1) * limitPerPage;
+
+        const result = await this.pool.query<TripReservation>(
+            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1 LIMIT $2 OFFSET $3`,
+            [id, limitPerPage, offset]
+        );
+
+        return result.rows;
+    }
+
+    async getAllById(userId: string): Promise<TripReservation[]> {
         const result = await this.pool.query<TripReservation>(
             `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1`,
             [userId]

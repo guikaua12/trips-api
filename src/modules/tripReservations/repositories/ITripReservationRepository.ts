@@ -2,6 +2,7 @@ import { QueryResult } from 'pg';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 import { ReserveTripDTO } from '@/modules/tripReservations/dtos/ReserveTripDTO';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/dtos/UpdateTripReservationDTO';
+import { GetAllTripReservationDTO } from '@/modules/tripReservations/dtos/GetAllTripReservationDTO';
 
 export interface ITripReservationRepository {
     createTable(): Promise<QueryResult<any>>;
@@ -9,5 +10,6 @@ export interface ITripReservationRepository {
     getByDateRange(id: string, startDate: Date, endDate: Date): Promise<TripReservation | null>;
     create(data: ReserveTripDTO): Promise<TripReservation>;
     update(data: UpdateTripReservationDTO): Promise<TripReservation | null>;
-    getAll(userId: string): Promise<TripReservation[]>;
+    getAll(data: GetAllTripReservationDTO): Promise<TripReservation[]>;
+    getAllById(userId: string): Promise<TripReservation[]>;
 }
