@@ -1,11 +1,6 @@
 import { Trip } from '@/modules/trips/models/Trip';
+import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 
-export type TripReservationResponse = {
-    id: string;
+export interface TripReservationResponse extends Omit<TripReservation, 'tripId'> {
     trip: Trip;
-    userId: string;
-    startDate: Date;
-    endDate: Date;
-    totalPaid: number;
-    status: 'pending' | 'confirmed' | 'cancelled';
-};
+}
