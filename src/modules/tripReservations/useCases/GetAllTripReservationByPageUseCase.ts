@@ -1,16 +1,30 @@
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
+import { AppError } from '@/shared/errors/AppError';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
+import {
+    GetAllTripReservationDTO,
+    GetAllTripReservationDTOSchema,
+} from '@/modules/tripReservations/dtos/GetAllTripReservationDTO';
+import { ZodError } from 'zod';
+import { zodToString } from '@/shared/utils';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 
-export class GetAllTripReservationUseCase {
+export class GetAllTripReservationByPageUseCase {
     constructor(
         private repository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
+    async execute({ id, page }: GetAllTripReservationDTO): Promise<TripReservationResponse[]> {
+        try {
+            GetAllTripReservationDTOSchema.parse({ id, page });
+        } catch (err) {
+            if (err instanceof ZodError) {
+                throw new AppError(400, zodToString(err));
+            }
+        }
 
-    async execute(userId: string): Promise<TripReservationResponse[]> {
-        const tripReservations = await this.repository.getAllById(userId);
+        const tripReservations = await this.repository.getAll({ id, page });
 
         const tripReservationsResponses = await this.mapToResponse(tripReservations);
 

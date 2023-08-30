@@ -5,6 +5,9 @@ import { UpdateTripDTO } from '@/modules/trips/dtos/UpdateTripDTO';
 import { CreateTripDTO } from '@/modules/trips/dtos/CreateTripDTO';
 import { v4 } from 'uuid';
 import { SearchTripDTO } from '@/modules/trips/dtos/SearchTripDTO';
+import { pool } from '@/shared/database';
+import { query } from 'express';
+import { id } from 'date-fns/locale';
 
 export class TripRepository implements ITripRepository {
     static TABLE_NAME = 'trips';
@@ -119,5 +122,13 @@ export class TripRepository implements ITripRepository {
         }
 
         return trips;
+    }
+
+    async getAllByIds(ids: string[]): Promise<Trip[]> {
+        const result = await this.pool.query<Trip>(`SELECT * FROM ${TripRepository.TABLE_NAME} WHERE id = ANY($1)`, [
+            ids,
+        ]);
+
+        return result.rows;
     }
 }
