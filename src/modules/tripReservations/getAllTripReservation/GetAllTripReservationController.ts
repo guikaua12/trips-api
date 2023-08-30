@@ -9,11 +9,14 @@ export class GetAllTripReservationController {
     ) {}
     async handle(req: Request | any, res: Response) {
         const userId = req.userId;
-        const { page } = req.query;
+        const { sort_by, sort_dir, limit, page } = req.query;
 
         const tripReservations = await this.getAllTripReservationByPageUseCase.execute({
             id: userId,
-            page: parseInt(page),
+            page: parseInt(page) || undefined,
+            limit: parseInt(limit) || undefined,
+            sort_by,
+            sort_dir,
         });
 
         // return max pages

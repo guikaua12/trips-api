@@ -4,7 +4,7 @@ import { TripReservation } from '@/modules/tripReservations/models/TripReservati
 import { Pool, QueryResult } from 'pg';
 import { v4 } from 'uuid';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
-import { GetAllTripReservationDTO } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
+import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 
 export class TripReservationRepository implements ITripReservationRepository {
     public static TABLE_NAME = 'trips_reservations';
@@ -74,13 +74,12 @@ export class TripReservationRepository implements ITripReservationRepository {
         return result.rows[0];
     }
 
-    async getAll({ id, page }: GetAllTripReservationDTO): Promise<TripReservation[]> {
-        const limitPerPage = 5;
-        const offset = (page - 1) * limitPerPage;
+    async getAll({ id, sort_by, sort_dir, limit, page }: GetAllTripReservationDTOOutput): Promise<TripReservation[]> {
+        const offset = (page - 1) * limit;
 
         const result = await this.pool.query<TripReservation>(
-            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1 LIMIT $2 OFFSET $3`,
-            [id, limitPerPage, offset]
+            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1 ORDER BY "${sort_by}" ${sort_dir} LIMIT $2 OFFSET $3`,
+            [id, limit, offset]
         );
 
         return result.rows;

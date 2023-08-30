@@ -3,7 +3,7 @@ import { AppError } from '@/shared/errors/AppError';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 import {
-    GetAllTripReservationDTO,
+    GetAllTripReservationDTOInput,
     GetAllTripReservationDTOSchema,
 } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 import { ZodError } from 'zod';
@@ -15,22 +15,27 @@ export class GetAllTripReservationByPageUseCase {
         private repository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
-    async execute({ id, page }: GetAllTripReservationDTO): Promise<TripReservationWithTrip[]> {
-        try {
-            GetAllTripReservationDTOSchema.parse({ id, page });
-        } catch (err) {
-            if (err instanceof ZodError) {
-                throw new AppError(400, zodToString(err));
-            }
+    async execute({
+        id,
+        sort_by,
+        sort_dir,
+        limit,
+        page,
+    }: GetAllTripReservationDTOInput): Promise<TripReservationWithTrip[]> {
+        const parsed = GetAllTripReservationDTOSchema.safeParse({ id, sort_by, sort_dir, limit, page });
+
+        if (!parsed.success) {
+            throw new AppError(400, zodToString(parsed.error));
         }
 
-        const tripReservations = await this.repository.getAll({ id, page });
+        const parsedData = parsed.data;
+
+        const tripReservations = await this.repository.getAll({
+            ...parsedData,
+            id,
+        });
 
         const tripReservationsResponses = await this.mapToResponse(tripReservations);
-
-        tripReservationsResponses.sort((a, b) => (a.status === 'cancelled' ? 1 : -1));
-
-        console.log(tripReservationsResponses[0]);
 
         return tripReservationsResponses;
     }
