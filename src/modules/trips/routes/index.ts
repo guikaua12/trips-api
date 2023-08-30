@@ -1,11 +1,8 @@
 import { Router } from 'express';
-import { searchTripFactory } from '@/modules/trips/factories/SearchTripFactory';
-import { getTripFactory } from '@/modules/trips/factories/GetTripFactory';
+import { searchTripController } from '@/modules/trips/searchTrip';
+import { getTripController } from '@/modules/trips/getTrip';
 
 const tripsRouter = Router();
-
-const searchTripController = searchTripFactory();
-const getTripController = getTripFactory();
 
 tripsRouter.post('/search', async (req, res) => {
     await searchTripController.handle(req, res);

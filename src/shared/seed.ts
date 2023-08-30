@@ -1,5 +1,5 @@
 import { connect, pool } from '@/shared/database';
-import { CreateTripDTO } from '@/modules/trips/dtos/CreateTripDTO';
+import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
 import { TripRepository } from '@/modules/trips/repositories/TripRepository';
 import * as process from 'process';
 

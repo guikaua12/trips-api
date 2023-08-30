@@ -1,10 +1,10 @@
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import { Pool, QueryResult } from 'pg';
 import { Trip } from '@/modules/trips/models/Trip';
-import { UpdateTripDTO } from '@/modules/trips/dtos/UpdateTripDTO';
-import { CreateTripDTO } from '@/modules/trips/dtos/CreateTripDTO';
+import { UpdateTripDTO } from '@/modules/trips/updateTrip/UpdateTripDTO';
+import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
 import { v4 } from 'uuid';
-import { SearchTripDTO } from '@/modules/trips/dtos/SearchTripDTO';
+import { SearchTripDTO } from '@/modules/trips/searchTrip/SearchTripDTO';
 import { pool } from '@/shared/database';
 import { query } from 'express';
 import { id } from 'date-fns/locale';

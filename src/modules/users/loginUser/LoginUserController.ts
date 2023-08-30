@@ -1,4 +1,4 @@
-import { LoginUserUseCase } from '@/modules/users/useCases/LoginUserUseCase';
+import { LoginUserUseCase } from '@/modules/users/loginUser/LoginUserUseCase';
 import { Request, Response } from 'express';
 import { randomHash } from '@/shared/utils/randomUtils';
 import { generateJwt } from '@/shared/utils/jwt';

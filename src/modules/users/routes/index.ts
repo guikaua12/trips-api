@@ -1,11 +1,8 @@
 import { Router } from 'express';
-import { loginUserFactory } from '@/modules/users/factories/LoginUserFactory';
-import { registerUserFactory } from '@/modules/users/factories/RegisterUserFactory';
+import { loginUserController } from '@/modules/users/loginUser';
+import { registerUserController } from '@/modules/users/registerUser';
 
 const userRouter = Router();
-
-const loginUserController = loginUserFactory();
-const registerUserController = registerUserFactory();
 
 userRouter.post('/login', async (req, res) => {
     await loginUserController.handle(req, res);

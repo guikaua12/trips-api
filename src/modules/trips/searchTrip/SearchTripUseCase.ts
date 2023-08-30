@@ -1,5 +1,5 @@
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { SearchTripDTO, SearchTripDTOSchema } from '@/modules/trips/dtos/SearchTripDTO';
+import { SearchTripDTO, SearchTripDTOSchema } from '@/modules/trips/searchTrip/SearchTripDTO';
 import { Trip } from '@/modules/trips/models/Trip';
 import { AppError } from '@/shared/errors/AppError';
 import { ZodError } from 'zod';

@@ -1,10 +1,7 @@
 import { Router } from 'express';
-import { searchUserFactory } from '@/modules/users/factories/SearchUserFactory';
+import { searchUserController } from '@/modules/users/searchUser';
 import { tokenVerify } from '@/shared/middlewares/tokenVerify';
-import { verifyTokenFactory } from '@/modules/users/factories/VerifyTokenFactory';
-
-const searchUserController = searchUserFactory();
-const verifyTokenController = verifyTokenFactory();
+import { verifyTokenController } from '@/modules/users/verifyToken';
 
 const userPrivateRouter = Router();
 userPrivateRouter.use(tokenVerify);
