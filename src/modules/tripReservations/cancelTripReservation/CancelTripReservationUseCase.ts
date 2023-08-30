@@ -1,6 +1,6 @@
 import { AppError } from '@/shared/errors/AppError';
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
-import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
+import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import {
     CancelTripReservationDTO,
@@ -14,7 +14,7 @@ export class CancelTripReservationUseCase {
         private repository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
-    async execute({ tripId, userId }: CancelTripReservationDTO): Promise<TripReservationResponse> {
+    async execute({ tripId, userId }: CancelTripReservationDTO): Promise<TripReservationWithTrip> {
         try {
             CancelTripReservationDTOSchema.parse({ tripId, userId });
         } catch (err) {

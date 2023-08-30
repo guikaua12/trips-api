@@ -1,6 +1,6 @@
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
+import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 
 export class GetAllTripReservationUseCase {
@@ -9,7 +9,7 @@ export class GetAllTripReservationUseCase {
         private tripRepository: ITripRepository
     ) {}
 
-    async execute(userId: string): Promise<TripReservationResponse[]> {
+    async execute(userId: string): Promise<TripReservationWithTrip[]> {
         const tripReservations = await this.repository.getAllById(userId);
 
         const tripReservationsResponses = await this.mapToResponse(tripReservations);
@@ -19,7 +19,7 @@ export class GetAllTripReservationUseCase {
         return tripReservationsResponses;
     }
 
-    async mapToResponse(tripReservations: TripReservation[]): Promise<TripReservationResponse[]> {
+    async mapToResponse(tripReservations: TripReservation[]): Promise<TripReservationWithTrip[]> {
         const tripIds = tripReservations.map((tr) => tr.tripId);
 
         const trips = await this.tripRepository.getAllByIds(tripIds);

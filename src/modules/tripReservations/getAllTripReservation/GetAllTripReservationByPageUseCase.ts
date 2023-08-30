@@ -1,7 +1,7 @@
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
 import { AppError } from '@/shared/errors/AppError';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
+import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 import {
     GetAllTripReservationDTO,
     GetAllTripReservationDTOSchema,
@@ -15,7 +15,7 @@ export class GetAllTripReservationByPageUseCase {
         private repository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
-    async execute({ id, page }: GetAllTripReservationDTO): Promise<TripReservationResponse[]> {
+    async execute({ id, page }: GetAllTripReservationDTO): Promise<TripReservationWithTrip[]> {
         try {
             GetAllTripReservationDTOSchema.parse({ id, page });
         } catch (err) {
@@ -33,7 +33,7 @@ export class GetAllTripReservationByPageUseCase {
         return tripReservationsResponses;
     }
 
-    async mapToResponse(tripReservations: TripReservation[]): Promise<TripReservationResponse[]> {
+    async mapToResponse(tripReservations: TripReservation[]): Promise<TripReservationWithTrip[]> {
         const tripIds = tripReservations.map((tr) => tr.tripId);
 
         const trips = await this.tripRepository.getAllByIds(tripIds);

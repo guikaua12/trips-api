@@ -4,14 +4,14 @@ import { AppError } from '@/shared/errors/AppError';
 import { zodToString } from '@/shared/utils';
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
+import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 
 export class ReserveTripUseCase {
     constructor(
         private tripReservationRepository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
-    async execute({ tripId, userId, startDate, endDate, totalPaid }: ReserveTripDTO): Promise<TripReservationResponse> {
+    async execute({ tripId, userId, startDate, endDate, totalPaid }: ReserveTripDTO): Promise<TripReservationWithTrip> {
         try {
             ReserveTripDTOSchema.parse({ tripId, userId, startDate, endDate, totalPaid });
         } catch (err) {
@@ -37,7 +37,7 @@ export class ReserveTripUseCase {
         });
 
         const trip = await this.tripRepository.getById(tripId);
-        const tripReservationResponse: TripReservationResponse = {
+        const tripReservationResponse: TripReservationWithTrip = {
             id: tripReservation.id,
             trip: trip!,
             userId: tripReservation.userId,
