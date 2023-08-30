@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/dtos/UpdateTripReservationDTO';
+import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
 import { GetAllTripReservationDTO } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 
 export interface ITripReservationRepository {

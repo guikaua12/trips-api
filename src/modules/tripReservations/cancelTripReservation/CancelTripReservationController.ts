@@ -7,7 +7,7 @@ export class CancelTripReservationController {
         const id = req.params.id;
         const userId = req.userId;
 
-        const tripReservation = await this.useCase.execute({ id, userId, status: 'cancelled' });
+        const tripReservation = await this.useCase.execute({ tripId: id, userId });
         res.status(200).json({
             tripReservation,
         });

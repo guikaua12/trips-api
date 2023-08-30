@@ -1,18 +1,29 @@
 import { AppError } from '@/shared/errors/AppError';
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
 import { TripReservationResponse } from '@/modules/tripReservations/models/TripReservationResponse';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/dtos/UpdateTripReservationDTO';
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
+import {
+    CancelTripReservationDTO,
+    CancelTripReservationDTOSchema,
+} from '@/modules/tripReservations/cancelTripReservation/CancelTripReservationDTO';
+import { ZodError } from 'zod';
+import { zodToString } from '@/shared/utils';
 
 export class CancelTripReservationUseCase {
     constructor(
         private repository: ITripReservationRepository,
         private tripRepository: ITripRepository
     ) {}
-    async execute({ id, userId, status }: UpdateTripReservationDTO): Promise<TripReservationResponse> {
-        if (!id) throw new AppError(400, 'Trip reservation id is required');
+    async execute({ tripId, userId }: CancelTripReservationDTO): Promise<TripReservationResponse> {
+        try {
+            CancelTripReservationDTOSchema.parse({ tripId, userId });
+        } catch (err) {
+            if (err instanceof ZodError) {
+                throw new AppError(400, zodToString(err));
+            }
+        }
 
-        const tripReservation = await this.repository.getById(id);
+        const tripReservation = await this.repository.getById(tripId);
         if (!tripReservation) throw new AppError(404, 'Trip reservation not found');
 
         if (tripReservation.userId !== userId) {
@@ -28,7 +39,7 @@ export class CancelTripReservationUseCase {
             throw new AppError(404, 'Trip not found');
         }
 
-        const updatedTripReservation = await this.repository.update({ id, userId, status });
+        const updatedTripReservation = await this.repository.update({ id: tripId, userId, status: 'cancelled' });
         if (!updatedTripReservation) throw new AppError(404, 'Trip reservation not found');
 
         return {

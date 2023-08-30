@@ -3,7 +3,7 @@ import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTr
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 import { Pool, QueryResult } from 'pg';
 import { v4 } from 'uuid';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/dtos/UpdateTripReservationDTO';
+import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
 import { GetAllTripReservationDTO } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 
 export class TripReservationRepository implements ITripReservationRepository {
