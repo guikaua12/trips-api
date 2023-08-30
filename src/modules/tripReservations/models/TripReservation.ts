@@ -6,4 +6,5 @@ export type TripReservation = {
     endDate: Date;
     totalPaid: number;
     status: 'pending' | 'confirmed' | 'cancelled';
+    createdAt: Date;
 };

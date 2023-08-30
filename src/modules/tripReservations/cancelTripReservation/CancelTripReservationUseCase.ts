@@ -43,13 +43,8 @@ export class CancelTripReservationUseCase {
         if (!updatedTripReservation) throw new AppError(404, 'Trip reservation not found');
 
         return {
-            id: updatedTripReservation.id,
-            trip,
-            userId: updatedTripReservation.userId,
-            startDate: updatedTripReservation.startDate,
-            endDate: updatedTripReservation.endDate,
-            totalPaid: updatedTripReservation.totalPaid,
-            status: updatedTripReservation.status,
+            ...updatedTripReservation,
+            trip: trip,
         };
     }
 }

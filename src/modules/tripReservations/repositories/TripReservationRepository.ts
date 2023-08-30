@@ -19,7 +19,8 @@ export class TripReservationRepository implements ITripReservationRepository {
                 "startDate" DATE, 
                 "endDate" DATE, 
                 "totalPaid" DECIMAL(8,2),
-                "status" VARCHAR
+                "status" VARCHAR,
+                "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`
         );
     }

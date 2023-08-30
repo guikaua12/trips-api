@@ -38,13 +38,8 @@ export class ReserveTripUseCase {
 
         const trip = await this.tripRepository.getById(tripId);
         const tripReservationResponse: TripReservationWithTrip = {
-            id: tripReservation.id,
+            ...tripReservation,
             trip: trip!,
-            userId: tripReservation.userId,
-            startDate: tripReservation.startDate,
-            endDate: tripReservation.endDate,
-            totalPaid: tripReservation.totalPaid,
-            status: tripReservation.status,
         };
 
         return tripReservationResponse;

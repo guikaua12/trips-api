@@ -30,6 +30,8 @@ export class GetAllTripReservationByPageUseCase {
 
         tripReservationsResponses.sort((a, b) => (a.status === 'cancelled' ? 1 : -1));
 
+        console.log(tripReservationsResponses[0]);
+
         return tripReservationsResponses;
     }
 
@@ -38,17 +40,12 @@ export class GetAllTripReservationByPageUseCase {
 
         const trips = await this.tripRepository.getAllByIds(tripIds);
 
-        return tripReservations.map((tr) => {
+        return tripReservations.map((tr): TripReservationWithTrip => {
             const trip = trips.find((t) => t.id === tr.tripId);
 
             return {
-                id: tr.id,
+                ...tr,
                 trip: trip!,
-                userId: tr.userId,
-                startDate: tr.startDate,
-                endDate: tr.endDate,
-                totalPaid: tr.totalPaid,
-                status: tr.status,
             };
         });
     }

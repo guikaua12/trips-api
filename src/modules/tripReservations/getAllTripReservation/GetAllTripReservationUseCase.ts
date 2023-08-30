@@ -28,13 +28,8 @@ export class GetAllTripReservationUseCase {
             const trip = trips.find((t) => t.id === tr.tripId);
 
             return {
-                id: tr.id,
+                ...tr,
                 trip: trip!,
-                userId: tr.userId,
-                startDate: tr.startDate,
-                endDate: tr.endDate,
-                totalPaid: tr.totalPaid,
-                status: tr.status,
             };
         });
     }
