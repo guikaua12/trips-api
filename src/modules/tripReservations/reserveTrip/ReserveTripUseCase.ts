@@ -1,4 +1,4 @@
-import { ReserveTripDTO, ReserveTripDTOSchema } from '@/modules/tripReservations/dtos/ReserveTripDTO';
+import { ReserveTripDTO, ReserveTripDTOSchema } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
 import { ZodError } from 'zod';
 import { AppError } from '@/shared/errors/AppError';
 import { zodToString } from '@/shared/utils';

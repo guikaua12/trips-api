@@ -5,7 +5,7 @@ import { TripReservationResponse } from '@/modules/tripReservations/models/TripR
 import {
     GetAllTripReservationDTO,
     GetAllTripReservationDTOSchema,
-} from '@/modules/tripReservations/dtos/GetAllTripReservationDTO';
+} from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 import { ZodError } from 'zod';
 import { zodToString } from '@/shared/utils';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';

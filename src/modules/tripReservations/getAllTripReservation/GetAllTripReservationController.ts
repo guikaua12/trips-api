@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { GetAllTripReservationByPageUseCase } from '@/modules/tripReservations/useCases/GetAllTripReservationByPageUseCase';
-import { GetAllTripReservationUseCase } from '@/modules/tripReservations/useCases/GetAllTripReservationUseCase';
+import { GetAllTripReservationByPageUseCase } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationByPageUseCase';
+import { GetAllTripReservationUseCase } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationUseCase';
 
 export class GetAllTripReservationController {
     constructor(

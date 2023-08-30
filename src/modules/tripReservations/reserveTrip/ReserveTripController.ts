@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ReserveTripUseCase } from '@/modules/tripReservations/useCases/ReserveTripUseCase';
+import { ReserveTripUseCase } from '@/modules/tripReservations/reserveTrip/ReserveTripUseCase';
 
 export class ReserveTripController {
     constructor(private useCase: ReserveTripUseCase) {}
