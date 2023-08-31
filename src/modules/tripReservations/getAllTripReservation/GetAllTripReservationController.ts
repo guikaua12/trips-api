@@ -13,15 +13,15 @@ export class GetAllTripReservationController {
 
         const tripReservations = await this.getAllTripReservationByPageUseCase.execute({
             id: userId,
-            page: parseInt(page) || undefined,
-            limit: parseInt(limit) || undefined,
             sort_by,
             sort_dir,
+            limit: parseInt(limit) || undefined,
+            page: parseInt(page) || undefined,
         });
 
         // return max pages
         const allTripReservations = await this.getAllTripReservationUseCase.execute(userId);
-        const pages = Math.ceil(allTripReservations.length / 5);
+        const pages = Math.ceil(allTripReservations.length / (parseInt(limit) || 5));
 
         res.status(200).json({
             tripReservations,
