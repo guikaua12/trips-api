@@ -74,12 +74,21 @@ export class TripReservationRepository implements ITripReservationRepository {
         return result.rows[0];
     }
 
-    async getAll({ id, sort_by, sort_dir, limit, page }: GetAllTripReservationDTOOutput): Promise<TripReservation[]> {
-        const offset = (page - 1) * limit;
+    async getAll({
+        id,
+        sort_by,
+        sort_dir,
+        limit,
+        page_start,
+        page_end,
+    }: GetAllTripReservationDTOOutput): Promise<TripReservation[]> {
+        const offset = (page_start - 1) * limit;
+        // prettier-ignore
+        const finalLimit = (page_end - (page_start - 1)) * limit;
 
         const result = await this.pool.query<TripReservation>(
             `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1 ORDER BY "${sort_by}" ${sort_dir} LIMIT $2 OFFSET $3`,
-            [id, limit, offset]
+            [id, finalLimit, offset]
         );
 
         return result.rows;

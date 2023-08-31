@@ -20,9 +20,10 @@ export class GetAllTripReservationByPageUseCase {
         sort_by,
         sort_dir,
         limit,
-        page,
+        page_start,
+        page_end,
     }: GetAllTripReservationDTOInput): Promise<TripReservationWithTrip[]> {
-        const parsed = GetAllTripReservationDTOSchema.safeParse({ id, sort_by, sort_dir, limit, page });
+        const parsed = GetAllTripReservationDTOSchema.safeParse({ id, sort_by, sort_dir, limit, page_start, page_end });
 
         if (!parsed.success) {
             throw new AppError(400, zodToString(parsed.error));
