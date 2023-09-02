@@ -11,7 +11,7 @@ async function main() {
     await new UserRepository(pool).createTable();
     await new TripReservationRepository(pool).createTable();
 
-    const port = process.env.port;
+    const port = process.env.PORT || 2000;
     server.listen(port, () => {
         console.log(`Servidor escutando na porta ${port}`);
     });
