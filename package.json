@@ -9,7 +9,7 @@
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "seed": "ts-node-dev -r tsconfig-paths/register src/shared/seed.ts",
     "test": "jest",
-    "prepare": "ts-patch install -s"
+    "prepare": "npx ts-patch install -s"
   },
   "keywords": [],
   "author": "",
