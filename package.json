@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/src/index.js",
   "scripts": {
-    "build": "npx ts-patch install -s && tsc",
+    "build": "npx ts-patch install -s && npx tsc",
     "start": "node build/src/index.js --es-module-specifier-resolution=node",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "seed": "ts-node-dev -r tsconfig-paths/register src/shared/seed.ts",
