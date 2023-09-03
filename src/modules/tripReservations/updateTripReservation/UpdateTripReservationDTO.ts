@@ -12,7 +12,7 @@ export const UpdateTripReservationDTOSchema = z
     })
     .superRefine(({ status }, ctx) => {
         // at least one field
-        if (location) return;
+        if (status) return;
 
         ctx.addIssue({ code: 'custom', message: 'Pelo menos um dos campos deve ser preenchido' });
     });
