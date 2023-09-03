@@ -41,7 +41,9 @@ export class TripRepository implements ITripRepository {
         const query: string[] = [];
 
         if (location && location.trim().length) {
-            query.push(`"location" LIKE '${location}'`);
+            query.push(
+                `"location" LIKE '${location}' OR "countryCode" LIKE '${location}' OR "name" LIKE '${location}'`
+            );
         }
 
         if (pricePerDay) {
