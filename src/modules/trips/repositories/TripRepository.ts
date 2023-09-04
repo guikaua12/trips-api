@@ -42,7 +42,7 @@ export class TripRepository implements ITripRepository {
 
         if (location && location.trim().length) {
             query.push(
-                `"location" LIKE '%${location}%' OR "countryCode" LIKE '%${location}%' OR "name" LIKE '%${location}%'`
+                `unaccent("location") ILIKE '%${location}%' OR unaccent("countryCode") ILIKE '%${location}%' OR unaccent("name") ILIKE '%${location}%'`
             );
         }
 
