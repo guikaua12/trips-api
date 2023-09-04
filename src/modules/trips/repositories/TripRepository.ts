@@ -57,7 +57,7 @@ export class TripRepository implements ITripRepository {
         if (query.length === 0) return [];
 
         const result = await this.pool.query<Trip>(
-            `SELECT * FROM ${TripRepository.TABLE_NAME} WHERE ${query.join(' AND ')}`
+            `SELECT * FROM ${TripRepository.TABLE_NAME} WHERE ${query.join(' AND ')} collate utf8_general_ci`
         );
 
         return result.rows;
