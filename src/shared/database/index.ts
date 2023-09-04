@@ -2,7 +2,7 @@ import * as process from 'process';
 
 require('dotenv').config();
 import pg, { Pool } from 'pg';
-import { tripRepository, tripReservationRepository, userRepository } from '@/modules/trips/repositories';
+import { init, tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value: string) => parseFloat(value));
 
 export const pool = new Pool({
@@ -17,6 +17,7 @@ export async function connect() {
             return;
         }
 
+        init(pool);
         createTables();
         setupExtensions();
         console.log('Database connected');
@@ -24,9 +25,9 @@ export async function connect() {
 }
 
 export async function createTables() {
-    await tripRepository.createTable();
-    await userRepository.createTable();
-    await tripReservationRepository.createTable();
+    await tripRepository?.createTable();
+    await userRepository?.createTable();
+    await tripReservationRepository?.createTable();
 }
 
 export async function setupExtensions() {
