@@ -1,4 +1,4 @@
-import { tr } from 'date-fns/locale';
+import { connect } from '@/shared/database';
 
 require('dotenv').config();
 import { Pool } from 'pg';

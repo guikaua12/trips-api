@@ -1,5 +1,4 @@
 import { TripRepository } from '@/modules/trips/repositories/TripRepository';
-import { pool } from '@/shared/database';
 import { UserRepository } from '@/modules/users/repositories/UserRepository';
 import { TripReservationRepository } from '@/modules/tripReservations/repositories/TripReservationRepository';
 import { Pool } from 'pg';
