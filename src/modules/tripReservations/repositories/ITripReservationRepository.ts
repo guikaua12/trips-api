@@ -5,12 +5,19 @@ import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripR
 import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
 
 export interface ITripReservationRepository {
-    createTable(): Promise<QueryResult<any>>;
+    createTable(): Promise<QueryResult>;
+
+    insert(data: ReserveTripDTO): Promise<TripReservation>;
+
     getById(id: string): Promise<TripReservation | null>;
-    getByDateRange(id: string, startDate: Date, endDate: Date): Promise<TripReservation | null>;
-    create(data: ReserveTripDTO): Promise<TripReservation>;
+
+    getByDateRange(tripId: string, startDate: Date, endDate: Date): Promise<TripReservation | null>;
+
+    getAllByUserId(userId: string): Promise<TripReservation[]>;
+
+    searchMany(data: GetAllTripReservationDTOOutput): Promise<TripReservation[]>;
+
     update(data: UpdateTripReservationDTO): Promise<TripReservation | null>;
-    getAll(data: GetAllTripReservationDTOOutput): Promise<TripReservation[]>;
-    getAllById(userId: string): Promise<TripReservation[]>;
+
     deleteAll(): Promise<void | null>;
 }

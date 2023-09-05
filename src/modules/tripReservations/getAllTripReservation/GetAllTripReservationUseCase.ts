@@ -10,7 +10,7 @@ export class GetAllTripReservationUseCase {
     ) {}
 
     async execute(userId: string): Promise<TripReservationWithTrip[]> {
-        const tripReservations = await this.repository.getAllById(userId);
+        const tripReservations = await this.repository.getAllByUserId(userId);
 
         const tripReservationsResponses = await this.mapToResponse(tripReservations);
 

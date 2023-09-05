@@ -10,7 +10,7 @@ export class TripReservationRepository implements ITripReservationRepository {
     public static TABLE_NAME = 'trips_reservations';
     constructor(private pool: Pool) {}
 
-    async createTable(): Promise<QueryResult<any>> {
+    async createTable(): Promise<QueryResult> {
         return this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${TripReservationRepository.TABLE_NAME} (
                 "id" VARCHAR PRIMARY KEY, 
@@ -25,7 +25,7 @@ export class TripReservationRepository implements ITripReservationRepository {
         );
     }
 
-    async create({ tripId, userId, startDate, endDate, totalPaid }: ReserveTripDTO): Promise<TripReservation> {
+    async insert({ tripId, userId, startDate, endDate, totalPaid }: ReserveTripDTO): Promise<TripReservation> {
         const id = v4();
         const defaultStatus = 'confirmed';
 
@@ -46,35 +46,25 @@ export class TripReservationRepository implements ITripReservationRepository {
         return result.rows[0] || null;
     }
 
-    async getByDateRange(id: string, startDate: Date, endDate: Date): Promise<TripReservation | null> {
+    async getByDateRange(tripId: string, startDate: Date, endDate: Date): Promise<TripReservation | null> {
         const result = await this.pool.query<TripReservation>(
             `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "tripId" = $1 AND "startDate" <= $2 AND "endDate" >= $3 AND "status" != 'cancelled'`,
-            [id, endDate, startDate]
+            [tripId, endDate, startDate]
         );
 
         return result.rows[0] || null;
     }
 
-    async update({ id, userId, status }: UpdateTripReservationDTO): Promise<TripReservation | null> {
-        const query: string[] = [];
-
-        if (status && status.length) {
-            query.push(`"status" = '${status}'`);
-        }
-
-        if (!query.length) return null;
-
+    async getAllByUserId(userId: string): Promise<TripReservation[]> {
         const result = await this.pool.query<TripReservation>(
-            `UPDATE ${TripReservationRepository.TABLE_NAME} SET ${query.join(
-                ', '
-            )} WHERE "id" = $1 AND "userId" = $2 RETURNING *`,
-            [id, userId]
+            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1`,
+            [userId]
         );
 
-        return result.rows[0];
+        return result.rows;
     }
 
-    async getAll({
+    async searchMany({
         id,
         sort_by,
         sort_dir,
@@ -94,13 +84,23 @@ export class TripReservationRepository implements ITripReservationRepository {
         return result.rows;
     }
 
-    async getAllById(userId: string): Promise<TripReservation[]> {
+    async update({ id, userId, status }: UpdateTripReservationDTO): Promise<TripReservation | null> {
+        const query: string[] = [];
+
+        if (status && status.length) {
+            query.push(`"status" = '${status}'`);
+        }
+
+        if (!query.length) return null;
+
         const result = await this.pool.query<TripReservation>(
-            `SELECT * FROM ${TripReservationRepository.TABLE_NAME} WHERE "userId" = $1`,
-            [userId]
+            `UPDATE ${TripReservationRepository.TABLE_NAME} SET ${query.join(
+                ', '
+            )} WHERE "id" = $1 AND "userId" = $2 RETURNING *`,
+            [id, userId]
         );
 
-        return result.rows;
+        return result.rows[0];
     }
 
     async deleteAll(): Promise<void | null> {

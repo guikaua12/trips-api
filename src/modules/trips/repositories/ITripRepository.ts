@@ -5,13 +5,21 @@ import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
 import { SearchTripDTO } from '@/modules/trips/searchTrip/SearchTripDTO';
 
 export interface ITripRepository {
-    createTable(): Promise<QueryResult<any>>;
-    search(data: SearchTripDTO): Promise<Trip[]>;
+    createTable(): Promise<QueryResult>;
+
+    insert(data: CreateTripDTO): Promise<Trip>;
+
+    insertMany(data: CreateTripDTO[]): Promise<Trip[]>;
+
     getById(id: string): Promise<Trip | null>;
-    deleteById(id: string): Promise<void | null>;
-    deleteAll(): Promise<void | null>;
-    updateById(data: UpdateTripDTO): Promise<Trip | null>;
-    create(data: CreateTripDTO): Promise<Trip>;
-    createMany(data: CreateTripDTO[]): Promise<Trip[]>;
+
     getAllByIds(ids: string[]): Promise<Trip[]>;
+
+    searchMany(data: SearchTripDTO): Promise<Trip[]>;
+
+    updateById(data: UpdateTripDTO): Promise<Trip | null>;
+
+    deleteById(id: string): Promise<void | null>;
+
+    deleteAll(): Promise<void | null>;
 }

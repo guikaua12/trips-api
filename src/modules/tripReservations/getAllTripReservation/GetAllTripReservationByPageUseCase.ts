@@ -30,7 +30,7 @@ export class GetAllTripReservationByPageUseCase {
 
         const parsedData = parsed.data;
 
-        const tripReservations = await this.repository.getAll({
+        const tripReservations = await this.repository.searchMany({
             ...parsedData,
             id,
         });

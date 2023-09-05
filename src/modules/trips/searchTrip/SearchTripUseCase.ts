@@ -17,6 +17,6 @@ export class SearchTripUseCase {
             }
         }
 
-        return this.tripRepository.search({ location, startDate, pricePerDay, recommended });
+        return this.tripRepository.searchMany({ location, startDate, pricePerDay, recommended });
     }
 }

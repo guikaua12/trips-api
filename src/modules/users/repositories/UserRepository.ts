@@ -11,7 +11,7 @@ export class UserRepository implements IUserRepository {
     public static TABLE_NAME = 'users';
     constructor(private pool: Pool) {}
 
-    async createTable(): Promise<QueryResult<any>> {
+    async createTable(): Promise<QueryResult> {
         return this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${UserRepository.TABLE_NAME} (
                 "id" VARCHAR NOT NULL PRIMARY KEY,
@@ -21,7 +21,7 @@ export class UserRepository implements IUserRepository {
         );
     }
 
-    async create(data: RegisterUserDTO): Promise<User> {
+    async insert(data: RegisterUserDTO): Promise<User> {
         const uuid = v4();
         const hashedPassword = await hash(data.password);
 
@@ -31,15 +31,6 @@ export class UserRepository implements IUserRepository {
         );
 
         return result.rows[0];
-    }
-
-    async deleteById(id: string): Promise<void | null> {
-        await pool.query(
-            `DELETE
-                          FROM ${UserRepository.TABLE_NAME}
-                          WHERE "id" = $1`,
-            [id]
-        );
     }
 
     async search({ id, email }: SearchUserDTO): Promise<User | null> {
@@ -60,6 +51,15 @@ export class UserRepository implements IUserRepository {
         );
 
         return result.rows[0] || null;
+    }
+
+    async deleteById(id: string): Promise<void | null> {
+        await pool.query(
+            `DELETE
+                          FROM ${UserRepository.TABLE_NAME}
+                          WHERE "id" = $1`,
+            [id]
+        );
     }
 
     async deleteAll(): Promise<void | null> {

@@ -264,7 +264,7 @@ export async function main() {
     await connect();
 
     const tripRepository = new TripRepository(pool);
-    await tripRepository.createMany(data);
+    await tripRepository.insertMany(data);
 
     console.log('Created trips.');
     process.exit(0);

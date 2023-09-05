@@ -28,7 +28,7 @@ export class ReserveTripUseCase {
         if (hasTripInDateRange) throw new AppError(400, 'Trip already reserved in date range');
 
         // create
-        const tripReservation = await this.tripReservationRepository.create({
+        const tripReservation = await this.tripReservationRepository.insert({
             tripId,
             userId,
             startDate,

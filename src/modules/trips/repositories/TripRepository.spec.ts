@@ -7,7 +7,7 @@ import { data } from '@/shared/seed';
 beforeAll(async () => {
     await connect();
     await tripRepository!.deleteAll();
-    await tripRepository!.createMany(data);
+    await tripRepository!.insertMany(data);
 });
 
 test('getAllByIds works', async () => {
@@ -17,32 +17,32 @@ test('getAllByIds works', async () => {
 });
 
 test('search by location works', async () => {
-    let trips = await tripRepository!.search({ location: 'Hotel' });
+    let trips = await tripRepository!.searchMany({ location: 'Hotel' });
     expect(trips.length).toBe(2);
 
-    trips = await tripRepository!.search({ location: 'hotel aurora' });
+    trips = await tripRepository!.searchMany({ location: 'hotel aurora' });
     expect(trips.length).toBe(1);
 
-    trips = await tripRepository!.search({ location: 'italia' });
+    trips = await tripRepository!.searchMany({ location: 'italia' });
     expect(trips.length).toBe(2);
 });
 
 test('search by pricePerDay works', async () => {
-    let trips = await tripRepository!.search({ pricePerDay: 700 });
+    let trips = await tripRepository!.searchMany({ pricePerDay: 700 });
     expect(trips.length).toBe(9);
 
-    trips = await tripRepository!.search({ pricePerDay: 300 });
+    trips = await tripRepository!.searchMany({ pricePerDay: 300 });
     expect(trips.length).toBe(4);
 
-    trips = await tripRepository!.search({ pricePerDay: 250 });
+    trips = await tripRepository!.searchMany({ pricePerDay: 250 });
     expect(trips.length).toBe(3);
 });
 
 test('search by recommended works', async () => {
-    let trips = await tripRepository!.search({ recommended: true });
+    let trips = await tripRepository!.searchMany({ recommended: true });
     expect(trips.length).toBe(4);
 
-    trips = await tripRepository!.search({ recommended: false });
+    trips = await tripRepository!.searchMany({ recommended: false });
     expect(trips.length).toBe(5);
 });
 
@@ -99,7 +99,7 @@ test('create works', async () => {
         maxGuests: 10,
     };
 
-    const trip = await tripRepository!.create(dto);
+    const trip = await tripRepository!.insert(dto);
 
     expect(trip).toBeDefined();
     expect(trip?.id).toEqual(dto.id);

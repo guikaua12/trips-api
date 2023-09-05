@@ -19,7 +19,7 @@ describe('crud methods', () => {
             password: '123',
         };
 
-        const user = await userRepository!.create(dto);
+        const user = await userRepository!.insert(dto);
 
         expect(user).toBeDefined();
         expect(user.id).toBeDefined();
@@ -32,7 +32,7 @@ describe('crud methods', () => {
             password: '123',
         };
 
-        const user = await userRepository!.create(dto);
+        const user = await userRepository!.insert(dto);
 
         expect(user).toBeDefined();
 
@@ -47,7 +47,7 @@ describe('crud methods', () => {
             password: '123',
         };
 
-        const user = await userRepository!.create(dto);
+        const user = await userRepository!.insert(dto);
 
         // deleted
         await userRepository!.deleteById(user.id!);

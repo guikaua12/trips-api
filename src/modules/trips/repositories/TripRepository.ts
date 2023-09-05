@@ -14,7 +14,7 @@ export class TripRepository implements ITripRepository {
         this.pool = pool;
     }
 
-    async createTable(): Promise<QueryResult<any>> {
+    async createTable(): Promise<QueryResult> {
         return this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${TripRepository.TABLE_NAME} (` +
                 '"id" VARCHAR PRIMARY KEY, ' +
@@ -34,7 +34,58 @@ export class TripRepository implements ITripRepository {
         );
     }
 
-    async search({ location, startDate, pricePerDay, recommended }: SearchTripDTO): Promise<Trip[]> {
+    async insert(data: CreateTripDTO): Promise<Trip> {
+        const uuid = data.id || v4();
+
+        const result = await this.pool.query<Trip>(
+            `INSERT INTO ${TripRepository.TABLE_NAME} ("id", "name", "location", "description", "startDate", "endDate", "pricePerDay", "coverImage", "imagesUrl", "highlights", "maxGuests", "countryCode", "recommended") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
+            [
+                uuid,
+                data.name,
+                data.location,
+                data.description,
+                data.startDate,
+                data.endDate,
+                data.pricePerDay,
+                data.coverImage,
+                data.imagesUrl,
+                data.highlights,
+                data.maxGuests,
+                data.countryCode,
+                data.recommended,
+            ]
+        );
+
+        return result.rows[0];
+    }
+
+    async insertMany(data: CreateTripDTO[]): Promise<Trip[]> {
+        const trips: Trip[] = [];
+
+        for (const dto of data) {
+            const result = await this.insert(dto);
+            trips.push(result);
+        }
+
+        return trips;
+    }
+    async getById(id: string): Promise<Trip | null> {
+        const result = await this.pool.query<Trip>(`SELECT * FROM ${TripRepository.TABLE_NAME} WHERE id = $1`, [id]);
+
+        const trip = result.rows[0];
+
+        return trip || null;
+    }
+
+    async getAllByIds(ids: string[]): Promise<Trip[]> {
+        const result = await this.pool.query<Trip>(`SELECT * FROM ${TripRepository.TABLE_NAME} WHERE id = ANY($1)`, [
+            ids,
+        ]);
+
+        return result.rows;
+    }
+
+    async searchMany({ location, startDate, pricePerDay, recommended }: SearchTripDTO): Promise<Trip[]> {
         const query: string[] = [];
 
         if (location && location.trim().length) {
@@ -59,22 +110,6 @@ export class TripRepository implements ITripRepository {
 
         return result.rows;
     }
-
-    async getById(id: string): Promise<Trip | null> {
-        const result = await this.pool.query<Trip>(`SELECT * FROM ${TripRepository.TABLE_NAME} WHERE id = $1`, [id]);
-
-        const trip = result.rows[0];
-
-        return trip || null;
-    }
-    async deleteById(id: string): Promise<void | null> {
-        await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME} WHERE id = $1`, [id]);
-    }
-
-    async deleteAll(): Promise<void | null> {
-        await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME};`);
-    }
-
     async updateById(data: UpdateTripDTO): Promise<Trip | null> {
         const query: string[] = [];
 
@@ -93,46 +128,11 @@ export class TripRepository implements ITripRepository {
 
         return result.rows[0] || null;
     }
-    async create(data: CreateTripDTO): Promise<Trip> {
-        const uuid = data.id || v4();
-
-        const result = await this.pool.query<Trip>(
-            `INSERT INTO ${TripRepository.TABLE_NAME} ("id", "name", "location", "description", "startDate", "endDate", "pricePerDay", "coverImage", "imagesUrl", "highlights", "maxGuests", "countryCode", "recommended") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
-            [
-                uuid,
-                data.name,
-                data.location,
-                data.description,
-                data.startDate,
-                data.endDate,
-                data.pricePerDay,
-                data.coverImage,
-                data.imagesUrl,
-                data.highlights,
-                data.maxGuests,
-                data.countryCode,
-                data.recommended,
-            ]
-        );
-
-        return result.rows[0];
-    }
-    async createMany(data: CreateTripDTO[]): Promise<Trip[]> {
-        const trips: Trip[] = [];
-
-        for (const dto of data) {
-            const result = await this.create(dto);
-            trips.push(result);
-        }
-
-        return trips;
+    async deleteById(id: string): Promise<void | null> {
+        await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME} WHERE id = $1`, [id]);
     }
 
-    async getAllByIds(ids: string[]): Promise<Trip[]> {
-        const result = await this.pool.query<Trip>(`SELECT * FROM ${TripRepository.TABLE_NAME} WHERE id = ANY($1)`, [
-            ids,
-        ]);
-
-        return result.rows;
+    async deleteAll(): Promise<void | null> {
+        await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME};`);
     }
 }

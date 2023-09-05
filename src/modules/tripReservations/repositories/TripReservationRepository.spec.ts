@@ -31,8 +31,8 @@ describe('crud methods', () => {
     let user: User | undefined;
 
     beforeAll(async () => {
-        trip = await tripRepository!.create(data[0]);
-        user = await userRepository!.create({ email: 'john@doe.com', password: '123' });
+        trip = await tripRepository!.insert(data[0]);
+        user = await userRepository!.insert({ email: 'john@doe.com', password: '123' });
     });
 
     beforeEach(async () => {
@@ -48,7 +48,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         };
 
-        const createdTripReservation = await tripReservationRepository!.create(dto);
+        const createdTripReservation = await tripReservationRepository!.insert(dto);
 
         expect(createdTripReservation).toBeDefined();
         expect(createdTripReservation.tripId).toEqual(dto.tripId);
@@ -65,7 +65,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         };
 
-        const createdTripReservation = await tripReservationRepository!.create(dto);
+        const createdTripReservation = await tripReservationRepository!.insert(dto);
 
         const tripReservation = await tripReservationRepository!.getById(createdTripReservation.id);
 
@@ -81,7 +81,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         };
 
-        const createdTripReservation = await tripReservationRepository!.create(dto);
+        const createdTripReservation = await tripReservationRepository!.insert(dto);
 
         const tripReservation1 = await tripReservationRepository!.getByDateRange(
             trip!.id,
@@ -109,7 +109,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         };
 
-        await tripReservationRepository!.create(dto);
+        await tripReservationRepository!.insert(dto);
 
         const tripReservation1 = await tripReservationRepository!.getByDateRange(
             trip!.id,
@@ -137,7 +137,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         };
 
-        const createdTripReservation = await tripReservationRepository!.create(dto);
+        const createdTripReservation = await tripReservationRepository!.insert(dto);
 
         expect(createdTripReservation.status).toEqual('confirmed');
 
@@ -153,14 +153,14 @@ describe('crud methods', () => {
     });
 
     test('should get all trip reservations of a user by id', async () => {
-        const tripReservation1 = await tripReservationRepository!.create({
+        const tripReservation1 = await tripReservationRepository!.insert({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
             endDate: new Date('2023-09-05'),
             totalPaid: 100,
         });
-        const tripReservation2 = await tripReservationRepository!.create({
+        const tripReservation2 = await tripReservationRepository!.insert({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
@@ -168,21 +168,21 @@ describe('crud methods', () => {
             totalPaid: 100,
         });
 
-        const tripReservations = await tripReservationRepository!.getAllById(user!.id);
+        const tripReservations = await tripReservationRepository!.getAllByUserId(user!.id);
 
         expect(tripReservations).toContainEqual(tripReservation1);
         expect(tripReservations).toContainEqual(tripReservation2);
     });
 
     test('should get all trip reservations of a user using pagination', async () => {
-        const createdTripReservation1 = await tripReservationRepository!.create({
+        const createdTripReservation1 = await tripReservationRepository!.insert({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
             endDate: new Date('2023-09-05'),
             totalPaid: 100,
         });
-        const createdTripReservation2 = await tripReservationRepository!.create({
+        const createdTripReservation2 = await tripReservationRepository!.insert({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
@@ -190,7 +190,7 @@ describe('crud methods', () => {
             totalPaid: 100,
         });
 
-        const tripReservations = await tripReservationRepository!.getAll({
+        const tripReservations = await tripReservationRepository!.searchMany({
             id: user!.id,
             limit: 10,
             page_start: 1,
