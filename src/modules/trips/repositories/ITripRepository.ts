@@ -9,6 +9,7 @@ export interface ITripRepository {
     search(data: SearchTripDTO): Promise<Trip[]>;
     getById(id: string): Promise<Trip | null>;
     deleteById(id: string): Promise<void | null>;
+    deleteAll(): Promise<void | null>;
     updateById(data: UpdateTripDTO): Promise<Trip | null>;
     create(data: CreateTripDTO): Promise<Trip>;
     createMany(data: CreateTripDTO[]): Promise<Trip[]>;

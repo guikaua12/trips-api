@@ -73,6 +73,11 @@ export class TripRepository implements ITripRepository {
     async deleteById(id: string): Promise<void | null> {
         await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME} WHERE id = $1`, [id]);
     }
+
+    async deleteAll(): Promise<void | null> {
+        await this.pool.query(`DELETE FROM ${TripRepository.TABLE_NAME};`);
+    }
+
     async updateById(data: UpdateTripDTO): Promise<Trip | null> {
         const query: string[] = [];
 
