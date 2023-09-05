@@ -260,7 +260,7 @@ export const data: CreateTripDTO[] = [
     },
 ];
 
-async function main() {
+export async function main() {
     await connect();
 
     const tripRepository = new TripRepository(pool);
@@ -269,5 +269,3 @@ async function main() {
     console.log('Created trips.');
     process.exit(0);
 }
-
-main();
