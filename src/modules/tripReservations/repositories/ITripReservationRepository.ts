@@ -12,4 +12,5 @@ export interface ITripReservationRepository {
     update(data: UpdateTripReservationDTO): Promise<TripReservation | null>;
     getAll(data: GetAllTripReservationDTOOutput): Promise<TripReservation[]>;
     getAllById(userId: string): Promise<TripReservation[]>;
+    deleteAll(): Promise<void | null>;
 }

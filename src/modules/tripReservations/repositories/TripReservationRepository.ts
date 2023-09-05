@@ -102,4 +102,8 @@ export class TripReservationRepository implements ITripReservationRepository {
 
         return result.rows;
     }
+
+    async deleteAll(): Promise<void | null> {
+        await this.pool.query(`DELETE FROM ${TripReservationRepository.TABLE_NAME};`);
+    }
 }
