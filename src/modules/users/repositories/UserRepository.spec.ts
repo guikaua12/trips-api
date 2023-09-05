@@ -1,4 +1,4 @@
-import { describe, expect, afterAll, beforeAll, beforeEach, test } from '@jest/globals';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 
 import { connect } from '@/shared/database';
 import { userRepository } from '@/shared/repositories';

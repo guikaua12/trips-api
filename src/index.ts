@@ -1,5 +1,6 @@
 import { server } from '@/shared/server/server';
 import { connect } from '@/shared/database';
+
 require('dotenv').config();
 require('dotenv').config({ path: '.env.local' });
 

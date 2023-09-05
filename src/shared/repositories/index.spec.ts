@@ -1,4 +1,4 @@
-import { test, expect, afterAll, beforeAll } from '@jest/globals';
+import { expect, test } from '@jest/globals';
 import { init, userRepository } from '@/shared/repositories/index';
 import { pool } from '@/shared/database';
 

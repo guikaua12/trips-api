@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import { router } from '@/shared/routes';
 import { AppError } from '@/shared/errors/AppError';
 import { dateParseMiddleware } from '@/shared/middlewares/dateParseMiddleware';
+
 const cors = require('cors');
 
 const server = express();

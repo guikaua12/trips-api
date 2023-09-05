@@ -1,6 +1,6 @@
 import { connect } from '@/shared/database';
 
-import { test, expect, beforeAll, afterAll } from '@jest/globals';
+import { afterAll, beforeAll, expect, test } from '@jest/globals';
 import { tripRepository } from '@/shared/repositories';
 import { data } from '@/shared/seed';
 

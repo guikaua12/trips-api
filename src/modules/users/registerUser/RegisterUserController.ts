@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { RegisterUserUseCase } from '@/modules/users/registerUser/RegisterUserUseCase';
 import { generateJwt } from '@/shared/utils/jwt';
+
 export class RegisterUserController {
     constructor(private useCase: RegisterUserUseCase) {}
 

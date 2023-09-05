@@ -1,9 +1,9 @@
 import * as process from 'process';
+import pg, { Pool } from 'pg';
+import { init, tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 
 require('dotenv').config();
 require('dotenv').config({ path: '.env.local' });
-import pg, { Pool } from 'pg';
-import { init, tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value: string) => parseFloat(value));
 
 export let pool = new Pool({

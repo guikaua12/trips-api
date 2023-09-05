@@ -5,9 +5,6 @@ import { UpdateTripDTO } from '@/modules/trips/updateTrip/UpdateTripDTO';
 import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
 import { v4 } from 'uuid';
 import { SearchTripDTO } from '@/modules/trips/searchTrip/SearchTripDTO';
-import { pool } from '@/shared/database';
-import { query } from 'express';
-import { id } from 'date-fns/locale';
 
 export class TripRepository implements ITripRepository {
     static TABLE_NAME = 'trips';
