@@ -72,23 +72,7 @@ describe('crud methods', () => {
         expect(tripReservation).toEqual(createdTripReservation);
     });
 
-    test('should get all trip reservations by user id', async () => {
-        const dto: ReserveTripDTO = {
-            tripId: trip!.id,
-            userId: user!.id,
-            startDate: new Date('2023-09-01'),
-            endDate: new Date('2023-09-05'),
-            totalPaid: 100,
-        };
-
-        await tripReservationRepository!.create(dto);
-
-        const tripReservations = await tripReservationRepository!.getAllById(user!.id);
-
-        expect(tripReservations.length).toEqual(1);
-    });
-
-    test('should get a trip reservation by date range', async () => {
+    test('should return a trip FOUND between a date range', async () => {
         const dto: ReserveTripDTO = {
             tripId: trip!.id,
             userId: user!.id,
@@ -101,27 +85,39 @@ describe('crud methods', () => {
 
         const tripReservation1 = await tripReservationRepository!.getByDateRange(
             trip!.id,
-            new Date('2023-08-29'),
-            new Date('2023-08-31')
-        );
-
-        expect(tripReservation1).toBeNull();
-
-        const tripReservation2 = await tripReservationRepository!.getByDateRange(
-            trip!.id,
             new Date('2023-08-31'),
             new Date('2023-09-06')
         );
 
-        expect(tripReservation2).toEqual(createdTripReservation);
+        expect(tripReservation1).toEqual(createdTripReservation);
 
-        const tripReservation3 = await tripReservationRepository!.getByDateRange(
+        const tripReservation2 = await tripReservationRepository!.getByDateRange(
             trip!.id,
             new Date('2023-09-05'),
             new Date('2023-09-08')
         );
 
-        expect(tripReservation3).toEqual(createdTripReservation);
+        expect(tripReservation2).toEqual(createdTripReservation);
+    });
+
+    test('should return null for a trip NOT found between a date range', async () => {
+        const dto: ReserveTripDTO = {
+            tripId: trip!.id,
+            userId: user!.id,
+            startDate: new Date('2023-09-01'),
+            endDate: new Date('2023-09-05'),
+            totalPaid: 100,
+        };
+
+        await tripReservationRepository!.create(dto);
+
+        const tripReservation1 = await tripReservationRepository!.getByDateRange(
+            trip!.id,
+            new Date('2023-08-29'),
+            new Date('2023-08-31')
+        );
+
+        expect(tripReservation1).toBeNull();
 
         const tripReservation4 = await tripReservationRepository!.getByDateRange(
             trip!.id,
@@ -157,14 +153,14 @@ describe('crud methods', () => {
     });
 
     test('should get all trip reservations of a user by id', async () => {
-        await tripReservationRepository!.create({
+        const tripReservation1 = await tripReservationRepository!.create({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
             endDate: new Date('2023-09-05'),
             totalPaid: 100,
         });
-        await tripReservationRepository!.create({
+        const tripReservation2 = await tripReservationRepository!.create({
             tripId: trip!.id,
             userId: user!.id,
             startDate: new Date('2023-09-01'),
@@ -174,10 +170,11 @@ describe('crud methods', () => {
 
         const tripReservations = await tripReservationRepository!.getAllById(user!.id);
 
-        expect(tripReservations.length).toEqual(2);
+        expect(tripReservations).toContainEqual(tripReservation1);
+        expect(tripReservations).toContainEqual(tripReservation2);
     });
 
-    test('should get all trip reservations of a user', async () => {
+    test('should get all trip reservations of a user using pagination', async () => {
         const createdTripReservation1 = await tripReservationRepository!.create({
             tripId: trip!.id,
             userId: user!.id,
@@ -202,7 +199,8 @@ describe('crud methods', () => {
             sort_dir: 'desc',
         });
 
-        expect(tripReservations.length).toEqual(2);
+        expect(tripReservations).toContainEqual(createdTripReservation1);
+        expect(tripReservations).toContainEqual(createdTripReservation2);
     });
 });
 
