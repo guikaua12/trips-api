@@ -97,7 +97,7 @@ export class TripRepository implements ITripRepository {
         return result.rows[0] || null;
     }
     async create(data: CreateTripDTO): Promise<Trip> {
-        const uuid = v4();
+        const uuid = data.id || v4();
 
         const result = await this.pool.query<Trip>(
             `INSERT INTO ${TripRepository.TABLE_NAME} ("id", "name", "location", "description", "startDate", "endDate", "pricePerDay", "coverImage", "imagesUrl", "highlights", "maxGuests", "countryCode", "recommended") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,

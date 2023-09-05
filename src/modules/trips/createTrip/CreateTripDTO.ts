@@ -1,4 +1,5 @@
 export interface CreateTripDTO {
+    id?: string;
     name: string;
     description: string;
     location: string;
