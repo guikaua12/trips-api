@@ -61,4 +61,8 @@ export class UserRepository implements IUserRepository {
 
         return result.rows[0] || null;
     }
+
+    async deleteAll(): Promise<void | null> {
+        await pool.query(`DELETE FROM ${UserRepository.TABLE_NAME};`);
+    }
 }

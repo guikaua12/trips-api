@@ -7,5 +7,6 @@ export interface IUserRepository {
     createTable(): Promise<QueryResult<any>>;
     search(data: SearchUserDTO): Promise<User | null>;
     deleteById(id: string): Promise<void | null>;
+    deleteAll(): Promise<void | null>;
     create(data: RegisterUserDTO): Promise<User>;
 }
