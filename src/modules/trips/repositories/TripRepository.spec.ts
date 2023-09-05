@@ -1,6 +1,6 @@
 import { connect } from '@/shared/database';
 
-import { test, expect, beforeAll } from '@jest/globals';
+import { test, expect, beforeAll, afterAll } from '@jest/globals';
 import { tripRepository } from '@/shared/repositories';
 import { data } from '@/shared/seed';
 
@@ -111,4 +111,8 @@ test('create works', async () => {
     expect(trip?.highlights).toEqual(dto.highlights);
     expect(trip?.recommended).toEqual(dto.recommended);
     expect(trip?.maxGuests).toEqual(dto.maxGuests);
+});
+
+afterAll(async () => {
+    await tripRepository!.deleteAll();
 });
