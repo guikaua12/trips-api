@@ -5,7 +5,11 @@ export function handleDates(body: any) {
 
     for (const key of Object.keys(body)) {
         const value = body[key];
-        if (isValid(value)) body[key] = parseISO(value);
-        else if (typeof value === 'object') handleDates(value);
+
+        if (typeof value === 'object') return handleDates(value);
+
+        const parsedDate = parseISO(value);
+
+        if (isValid(parsedDate)) body[key] = parsedDate;
     }
 }
