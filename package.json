@@ -8,7 +8,7 @@
     "start": "node build/src/index.js --es-module-specifier-resolution=node",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "seed": "ts-node-dev -r tsconfig-paths/register src/shared/seed.ts",
-    "test": "jest --runInBand --detectOpenHandles --no-cache --watchAll",
+    "test": "jest --no-cache --watchAll",
     "prepare": "npx ts-patch install -s"
   },
   "keywords": [],
