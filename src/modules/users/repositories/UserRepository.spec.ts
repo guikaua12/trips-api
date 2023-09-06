@@ -1,11 +1,14 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 
 import { connect } from '@/shared/database';
-import { userRepository } from '@/shared/repositories';
+import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 import { RegisterUserDTO } from '@/modules/users/registerUser/RegisterUserDTO';
 
 beforeAll(async () => {
     await connect();
+    await tripRepository!.deleteAll();
+    await userRepository!.deleteAll();
+    await tripReservationRepository!.deleteAll();
 });
 
 describe('crud methods', () => {
@@ -62,5 +65,7 @@ describe('crud methods', () => {
 });
 
 afterAll(async () => {
+    await tripRepository!.deleteAll();
     await userRepository!.deleteAll();
+    await tripReservationRepository!.deleteAll();
 });

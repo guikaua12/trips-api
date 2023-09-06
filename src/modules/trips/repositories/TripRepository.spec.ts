@@ -1,12 +1,15 @@
 import { connect } from '@/shared/database';
 
 import { afterAll, beforeAll, expect, test } from '@jest/globals';
-import { tripRepository } from '@/shared/repositories';
+import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 import { data } from '@/shared/seed';
 
 beforeAll(async () => {
     await connect();
     await tripRepository!.deleteAll();
+    await userRepository!.deleteAll();
+    await tripReservationRepository!.deleteAll();
+
     await tripRepository!.insertMany(data);
 });
 
@@ -115,4 +118,6 @@ test('create works', async () => {
 
 afterAll(async () => {
     await tripRepository!.deleteAll();
+    await userRepository!.deleteAll();
+    await tripReservationRepository!.deleteAll();
 });
