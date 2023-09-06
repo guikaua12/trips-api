@@ -2,7 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/g
 import { connect } from '@/shared/database';
 import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
 import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
-import { data } from '@/shared/seed';
+import { data } from '@/shared/seed/data';
 import { Trip } from '@/modules/trips/models/Trip';
 import { User } from '@/modules/users/models/User';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';

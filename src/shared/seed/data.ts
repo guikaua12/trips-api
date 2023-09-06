@@ -1,9 +1,4 @@
-import { connect, pool } from '@/shared/database';
 import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
-import { TripRepository } from '@/modules/trips/repositories/TripRepository';
-import * as process from 'process';
-
-console.log('seed');
 
 export const data: CreateTripDTO[] = [
     {
@@ -259,13 +254,3 @@ export const data: CreateTripDTO[] = [
         maxGuests: 5,
     },
 ];
-
-export async function main() {
-    await connect();
-
-    const tripRepository = new TripRepository(pool);
-    await tripRepository.insertMany(data);
-
-    console.log('Created trips.');
-    process.exit(0);
-}
