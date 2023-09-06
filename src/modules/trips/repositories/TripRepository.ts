@@ -113,7 +113,7 @@ export class TripRepository implements ITripRepository {
     async updateById(data: UpdateTripDTO): Promise<Trip | null> {
         const query: string[] = [];
 
-        for (let key in data) {
+        for (const key in data) {
             // ignore id
             if (key === 'id') continue;
 

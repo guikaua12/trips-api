@@ -4,7 +4,7 @@ import { env } from '@/dotenv';
 
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value: string) => parseFloat(value));
 
-export let pool = new Pool({
+export const pool = new Pool({
     connectionString: env.CONNECTION_URL,
 });
 
