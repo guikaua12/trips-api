@@ -91,3 +91,9 @@ describe('CancelTripReservationUseCase test', () => {
         });
     });
 });
+
+afterAll(() => {
+    userRepository!.deleteAll();
+    tripRepository!.deleteAll();
+    tripReservationRepository!.deleteAll();
+});
