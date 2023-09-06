@@ -1,11 +1,11 @@
-import * as process from 'process';
 import pg, { Pool } from 'pg';
 import { init, tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
+import { env } from '@/dotenv';
 
 pg.types.setTypeParser(pg.types.builtins.NUMERIC, (value: string) => parseFloat(value));
 
 export let pool = new Pool({
-    connectionString: process.env.CONNECTION_URL,
+    connectionString: env.CONNECTION_URL,
 });
 
 export async function connect() {
