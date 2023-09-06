@@ -1,21 +1,18 @@
-import { connect } from '@/shared/database';
 import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 import { describe, test, expect, beforeAll, beforeEach, afterAll } from '@jest/globals';
 import { CancelTripReservationUseCase } from './CancelTripReservationUseCase';
 import { AppError } from '@/shared/errors/AppError';
 import { data } from '@/seed/data';
+import { disconnect, connect } from '@/shared/database';
 
 beforeAll(async () => {
     await connect();
-    userRepository!.deleteAll();
-    tripRepository!.deleteAll();
-    tripReservationRepository!.deleteAll();
 });
 
 describe('CancelTripReservationUseCase test', () => {
     let cancelTripReservationUseCase;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         userRepository!.deleteAll();
         tripRepository!.deleteAll();
         tripReservationRepository!.deleteAll();
@@ -96,4 +93,5 @@ afterAll(() => {
     userRepository!.deleteAll();
     tripRepository!.deleteAll();
     tripReservationRepository!.deleteAll();
+    disconnect();
 });
