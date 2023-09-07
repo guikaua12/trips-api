@@ -2,7 +2,7 @@ import { connect } from '@/shared/database';
 
 import { afterAll, beforeAll, expect, test } from '@jest/globals';
 import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
-import { data } from '@/shared/seed/data';
+import { data } from '@/seed/data';
 
 beforeAll(async () => {
     await connect();
