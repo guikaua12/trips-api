@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GetAllTripReservationUseCase } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationUseCase';
+import { GetAllTripReservationUseCase } from '@/modules/tripReservations/getAllTripReservation/useCase';
 
 export class GetAllTripReservationController {
     constructor(private getAllTripReservationByPageUseCase: GetAllTripReservationUseCase) {}

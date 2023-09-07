@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeAll, beforeEach, afterEach, jest } from '@jest/globals';
-import { ReserveTripUseCase } from './ReserveTripUseCase';
-import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
+import { ReserveTripUseCase } from './useCase';
+import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
 import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripReservationWithTrip';
 import { AppError } from '@/shared/errors/AppError';
 import { data } from '@/seed/data';

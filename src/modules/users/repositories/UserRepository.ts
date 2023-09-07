@@ -1,11 +1,11 @@
 import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
 import { Pool, QueryResult } from 'pg';
-import { RegisterUserDTO } from '@/modules/users/registerUser/RegisterUserDTO';
+import { RegisterUserDTO } from '@/modules/users/registerUser/dto';
 import { User } from '@/modules/users/models/User';
 import { pool } from '@/shared/database';
 import { v4 } from 'uuid';
 import { hash } from '@/shared/utils/passwordUtils';
-import { SearchUserDTO } from '@/modules/users/searchUser/SearchUserDTO';
+import { SearchUserDTO } from '@/modules/users/searchUser/dto';
 
 export class UserRepository implements IUserRepository {
     public static TABLE_NAME = 'users';

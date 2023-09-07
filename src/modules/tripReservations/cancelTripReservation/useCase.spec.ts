@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import { CancelTripReservationUseCase } from './CancelTripReservationUseCase';
+import { CancelTripReservationUseCase } from './useCase';
 import { AppError } from '@/shared/errors/AppError';
 import { data } from '@/seed/data';
 import { UserRepository } from '@/modules/users/repositories/UserRepository';

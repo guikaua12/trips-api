@@ -2,7 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/g
 
 import { connect } from '@/shared/database';
 import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
-import { RegisterUserDTO } from '@/modules/users/registerUser/RegisterUserDTO';
+import { RegisterUserDTO } from '@/modules/users/registerUser/dto';
 
 beforeAll(async () => {
     await connect();

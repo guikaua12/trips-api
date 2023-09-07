@@ -1,4 +1,4 @@
-import { LoginUserDTO, LoginUserDTOSchema } from '@/modules/users/loginUser/LoginUserDTO';
+import { LoginUserDTO, LoginUserDTOSchema } from '@/modules/users/loginUser/dto';
 import { User } from '@/modules/users/models/User';
 import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
 import { ZodError } from 'zod';

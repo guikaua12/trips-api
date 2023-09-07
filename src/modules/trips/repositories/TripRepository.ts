@@ -1,10 +1,10 @@
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import { Pool, QueryResult } from 'pg';
 import { Trip } from '@/modules/trips/models/Trip';
-import { UpdateTripDTO } from '@/modules/trips/updateTrip/UpdateTripDTO';
-import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
+import { UpdateTripDTO } from '@/modules/trips/updateTrip/dto';
+import { CreateTripDTO } from '@/modules/trips/createTrip/dto';
 import { v4 } from 'uuid';
-import { SearchTripDTO } from '@/modules/trips/searchTrip/SearchTripDTO';
+import { SearchTripDTO } from '@/modules/trips/searchTrip/dto';
 
 export class TripRepository implements ITripRepository {
     static TABLE_NAME = 'trips';

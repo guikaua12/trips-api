@@ -1,7 +1,7 @@
 import { QueryResult } from 'pg';
 import { User } from '@/modules/users/models/User';
-import { RegisterUserDTO } from '@/modules/users/registerUser/RegisterUserDTO';
-import { SearchUserDTO } from '@/modules/users/searchUser/SearchUserDTO';
+import { RegisterUserDTO } from '@/modules/users/registerUser/dto';
+import { SearchUserDTO } from '@/modules/users/searchUser/dto';
 
 export interface IUserRepository {
     createTable(): Promise<QueryResult>;

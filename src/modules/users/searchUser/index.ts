@@ -1,5 +1,5 @@
-import { SearchUserController } from '@/modules/users/searchUser/SearchUserController';
-import { SearchUserUseCase } from '@/modules/users/searchUser/SearchUserUseCase';
+import { SearchUserController } from '@/modules/users/searchUser/controller';
+import { SearchUserUseCase } from '@/modules/users/searchUser/useCase';
 import { UserRepository } from '@/modules/users/repositories/UserRepository';
 import { pool } from '@/shared/database';
 

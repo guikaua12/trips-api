@@ -1,7 +1,7 @@
 import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
 import { User } from '@/modules/users/models/User';
 import { AppError } from '@/shared/errors/AppError';
-import { RegisterUserDTO, RegisterUserDTOSchema } from '@/modules/users/registerUser/RegisterUserDTO';
+import { RegisterUserDTO, RegisterUserDTOSchema } from '@/modules/users/registerUser/dto';
 import { zodToString } from '@/shared/utils';
 import { ZodError } from 'zod';
 

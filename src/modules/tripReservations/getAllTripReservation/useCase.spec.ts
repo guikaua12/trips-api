@@ -1,6 +1,6 @@
 import { data } from '@/seed/data';
 import { describe, test, expect, beforeEach, afterEach, jest } from '@jest/globals';
-import { GetAllTripReservationUseCase } from './GetAllTripReservationUseCase';
+import { GetAllTripReservationUseCase } from './useCase';
 import { TripReservationRepository } from '../repositories/TripReservationRepository';
 import { TripRepository } from '@/modules/trips/repositories/TripRepository';
 import { pool } from '@/shared/database';

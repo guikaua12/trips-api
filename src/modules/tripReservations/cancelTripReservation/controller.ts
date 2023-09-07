@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CancelTripReservationUseCase } from '@/modules/tripReservations/cancelTripReservation/CancelTripReservationUseCase';
+import { CancelTripReservationUseCase } from '@/modules/tripReservations/cancelTripReservation/useCase';
 
 export class CancelTripReservationController {
     constructor(private useCase: CancelTripReservationUseCase) {}

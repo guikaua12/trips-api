@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GetTripUseCase } from '@/modules/trips/getTrip/GetTripUseCase';
+import { GetTripUseCase } from '@/modules/trips/getTrip/useCase';
 
 export class GetTripController {
     constructor(private getTripUseCase: GetTripUseCase) {}

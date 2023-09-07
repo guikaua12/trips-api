@@ -1,8 +1,8 @@
 import { QueryResult } from 'pg';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
-import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
-import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
+import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
+import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/dto';
+import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/dto';
 
 export interface ITripReservationRepository {
     createTable(): Promise<QueryResult>;

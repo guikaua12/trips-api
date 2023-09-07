@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { SearchUserUseCase } from '@/modules/users/searchUser/SearchUserUseCase';
+import { SearchUserUseCase } from '@/modules/users/searchUser/useCase';
 
 export class SearchUserController {
     constructor(private useCase: SearchUserUseCase) {}

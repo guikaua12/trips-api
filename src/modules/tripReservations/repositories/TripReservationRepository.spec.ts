@@ -1,11 +1,11 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import { connect } from '@/shared/database';
-import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
+import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
 import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
 import { data } from '@/seed/data';
 import { Trip } from '@/modules/trips/models/Trip';
 import { User } from '@/modules/users/models/User';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
+import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/dto';
 
 beforeAll(async () => {
     await connect();

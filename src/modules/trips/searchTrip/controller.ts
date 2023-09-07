@@ -1,4 +1,4 @@
-import { SearchTripUseCase } from '@/modules/trips/searchTrip/SearchTripUseCase';
+import { SearchTripUseCase } from '@/modules/trips/searchTrip/useCase';
 import { Request, Response } from 'express';
 
 export class SearchTripController {

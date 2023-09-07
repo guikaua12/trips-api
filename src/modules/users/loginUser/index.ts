@@ -1,7 +1,7 @@
 import { UserRepository } from '@/modules/users/repositories/UserRepository';
 import { pool } from '@/shared/database';
-import { LoginUserUseCase } from '@/modules/users/loginUser/LoginUserUseCase';
-import { LoginUserController } from '@/modules/users/loginUser/LoginUserController';
+import { LoginUserUseCase } from '@/modules/users/loginUser/useCase';
+import { LoginUserController } from '@/modules/users/loginUser/controller';
 
 const userRepository = new UserRepository(pool);
 const loginUserUseCase = new LoginUserUseCase(userRepository);

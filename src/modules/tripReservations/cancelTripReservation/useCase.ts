@@ -5,7 +5,7 @@ import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
 import {
     CancelTripReservationDTO,
     CancelTripReservationDTOSchema,
-} from '@/modules/tripReservations/cancelTripReservation/CancelTripReservationDTO';
+} from '@/modules/tripReservations/cancelTripReservation/dto';
 import { ZodError } from 'zod';
 import { zodToString } from '@/shared/utils';
 

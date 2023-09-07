@@ -1,8 +1,8 @@
 import { TripReservationRepository } from '@/modules/tripReservations/repositories/TripReservationRepository';
 import { pool } from '@/shared/database';
 import { TripRepository } from '@/modules/trips/repositories/TripRepository';
-import { GetAllTripReservationUseCase } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationUseCase';
-import { GetAllTripReservationController } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationController';
+import { GetAllTripReservationUseCase } from '@/modules/tripReservations/getAllTripReservation/useCase';
+import { GetAllTripReservationController } from '@/modules/tripReservations/getAllTripReservation/controller';
 
 const tripReservationRepository = new TripReservationRepository(pool);
 const tripRepository = new TripRepository(pool);

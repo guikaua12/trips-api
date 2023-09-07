@@ -1,8 +1,8 @@
 import { QueryResult } from 'pg';
 import { Trip } from '@/modules/trips/models/Trip';
-import { UpdateTripDTO } from '@/modules/trips/updateTrip/UpdateTripDTO';
-import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
-import { SearchTripDTO } from '@/modules/trips/searchTrip/SearchTripDTO';
+import { UpdateTripDTO } from '@/modules/trips/updateTrip/dto';
+import { CreateTripDTO } from '@/modules/trips/createTrip/dto';
+import { SearchTripDTO } from '@/modules/trips/searchTrip/dto';
 
 export interface ITripRepository {
     createTable(): Promise<QueryResult>;

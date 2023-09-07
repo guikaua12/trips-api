@@ -1,10 +1,10 @@
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
-import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/ReserveTripDTO';
+import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 import { Pool, QueryResult } from 'pg';
 import { v4 } from 'uuid';
-import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/UpdateTripReservationDTO';
-import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
+import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/dto';
+import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/dto';
 
 export class TripReservationRepository implements ITripReservationRepository {
     public static TABLE_NAME = 'trips_reservations';

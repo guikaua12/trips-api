@@ -5,10 +5,14 @@ import { TripReservationWithTrip } from '@/modules/tripReservations/models/TripR
 import {
     GetAllTripReservationDTOInput,
     GetAllTripReservationDTOSchema,
-} from '@/modules/tripReservations/getAllTripReservation/GetAllTripReservationDTO';
+} from '@/modules/tripReservations/getAllTripReservation/dto';
 import { zodToString } from '@/shared/utils';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
-import { GetAllTripReservationReponse } from './GetAllTripReservationUseCaseResponse';
+
+export type GetAllTripReservationReponse = {
+    tripReservations: TripReservationWithTrip[];
+    pages: number;
+};
 
 export class GetAllTripReservationUseCase {
     constructor(

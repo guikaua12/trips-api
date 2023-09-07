@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { VerifyTokenUseCase } from '@/modules/users/verifyToken/VerifyTokenUseCase';
+import { VerifyTokenUseCase } from '@/modules/users/verifyToken/useCase';
 
 export class VerifyTokenController {
     constructor(private useCase: VerifyTokenUseCase) {}

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { RegisterUserUseCase } from '@/modules/users/registerUser/RegisterUserUseCase';
+import { RegisterUserUseCase } from '@/modules/users/registerUser/useCase';
 import { generateJwt } from '@/shared/utils/jwt';
 
 export class RegisterUserController {
