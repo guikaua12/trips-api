@@ -1,97 +1,122 @@
-import { tripRepository, tripReservationRepository, userRepository } from '@/shared/repositories';
-import { describe, test, expect, beforeAll, beforeEach, afterAll } from '@jest/globals';
+import { describe, test, expect, beforeEach, afterEach, jest } from '@jest/globals';
 import { CancelTripReservationUseCase } from './CancelTripReservationUseCase';
 import { AppError } from '@/shared/errors/AppError';
 import { data } from '@/seed/data';
-import { disconnect, connect } from '@/shared/database';
-
-beforeAll(async () => {
-    await connect();
-});
+import { UserRepository } from '@/modules/users/repositories/UserRepository';
+import { TripRepository } from '@/modules/trips/repositories/TripRepository';
+import { TripReservationRepository } from '@/modules/tripReservations/repositories/TripReservationRepository';
+import { pool } from '@/shared/database';
+import { Trip } from '@/modules/trips/models/Trip';
+import { TripReservation } from '../models/TripReservation';
 
 describe('CancelTripReservationUseCase test', () => {
-    let cancelTripReservationUseCase;
+    let userRepositoryMock: UserRepository;
+    let tripRepositoryMock: TripRepository;
+    let tripReservationRepositoryMock: TripReservationRepository;
+
+    let cancelTripReservationUseCase: CancelTripReservationUseCase;
 
     beforeEach(async () => {
-        userRepository!.deleteAll();
-        tripRepository!.deleteAll();
-        tripReservationRepository!.deleteAll();
-        cancelTripReservationUseCase = new CancelTripReservationUseCase(tripReservationRepository!, tripRepository!);
-    });
+        userRepositoryMock = new UserRepository(pool);
+        tripRepositoryMock = new TripRepository(pool);
+        tripReservationRepositoryMock = new TripReservationRepository(pool);
 
-    test('should not be able to cancel a trip reservation if it does not exists', async () => {
-        const userId = 'userId';
-        const tripReservationId = 'tripReservationId';
-
-        await expect(cancelTripReservationUseCase!.execute({ tripId: tripReservationId, userId })).rejects.toEqual(
-            new AppError(404, 'Trip reservation not found')
+        cancelTripReservationUseCase = new CancelTripReservationUseCase(
+            tripReservationRepositoryMock,
+            tripRepositoryMock
         );
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('should not be able to cancel a trip reservation if it does not exists', async () => {
+        jest.spyOn(tripReservationRepositoryMock, 'getById').mockResolvedValue(null);
+
+        await expect(
+            cancelTripReservationUseCase.execute({ tripId: 'some_trip_id', userId: 'some_user_id' })
+        ).rejects.toEqual(new AppError(404, 'Trip reservation not found'));
+    });
+
     test('should not be able to cancel a trip reservation if the trip owner is not the same as the requester', async () => {
-        const trip = await tripRepository!.insert(data[0]);
-        const user = await userRepository!.insert({ email: 'john@doe.com', password: '123' });
-        const tripReservation = await tripReservationRepository!.insert({
-            tripId: trip.id,
-            userId: user.id,
-            startDate: new Date('2023-09-01'),
-            endDate: new Date('2023-09-05'),
+        jest.spyOn(tripReservationRepositoryMock, 'getById').mockResolvedValue({
+            id: '1337',
+            tripId: data[0].id!,
+            userId: 'correct_owner_id',
+            startDate: new Date(),
+            endDate: new Date(),
             totalPaid: 100,
+            status: 'confirmed',
+            createdAt: new Date(),
         });
 
         await expect(
-            cancelTripReservationUseCase!.execute({ tripId: tripReservation.id, userId: 'some_wrong_user_id' })
+            cancelTripReservationUseCase.execute({ tripId: '1337', userId: 'some_wrong_user_id' })
         ).rejects.toEqual(new AppError(401, 'Unauthorized'));
     });
 
-    test('should not be able to cancel a trip reservation if the trip is already cancelled', async () => {
-        const trip = await tripRepository!.insert(data[0]);
-        const user = await userRepository!.insert({ email: 'john@doe.com', password: '123' });
-        const tripReservation = await tripReservationRepository!.insert({
-            tripId: trip.id,
-            userId: user.id,
-            startDate: new Date('2023-09-01'),
-            endDate: new Date('2023-09-05'),
+    test('should not be able to cancel a trip reservation if it is already cancelled', async () => {
+        jest.spyOn(tripReservationRepositoryMock, 'getById').mockResolvedValue({
+            id: '1337',
+            tripId: data[0].id!,
+            userId: 'correct_owner_id',
+            startDate: new Date(),
+            endDate: new Date(),
             totalPaid: 100,
+            status: 'cancelled',
+            createdAt: new Date(),
         });
 
-        await cancelTripReservationUseCase!.execute({ tripId: tripReservation.id, userId: user.id });
-
         await expect(
-            cancelTripReservationUseCase!.execute({ tripId: tripReservation.id, userId: user.id })
+            cancelTripReservationUseCase.execute({ tripId: '1337', userId: 'correct_owner_id' })
         ).rejects.toEqual(new AppError(400, 'Trip reservation already cancelled'));
     });
 
-    test('should be able to cancel a trip reservation', async () => {
-        const trip = await tripRepository!.insert(data[0]);
-        const user = await userRepository!.insert({ email: 'john@doe.com', password: '123' });
-        const tripReservation = await tripReservationRepository!.insert({
-            tripId: trip.id,
-            userId: user.id,
-            startDate: new Date('2023-09-01'),
-            endDate: new Date('2023-09-05'),
+    test('should not be able to cancel a trip reservation if the TRIP does not exist', async () => {
+        jest.spyOn(tripReservationRepositoryMock, 'getById').mockResolvedValue({
+            id: '1337',
+            tripId: data[0].id!,
+            userId: 'correct_owner_id',
+            startDate: new Date(),
+            endDate: new Date(),
             totalPaid: 100,
+            status: 'confirmed',
+            createdAt: new Date(),
         });
+        jest.spyOn(tripRepositoryMock, 'getById').mockResolvedValue(null);
 
         await expect(
-            cancelTripReservationUseCase!.execute({ tripId: tripReservation.id, userId: user.id })
-        ).resolves.toEqual({
-            id: tripReservation.id,
-            tripId: trip.id,
-            trip,
-            userId: user.id,
-            startDate: tripReservation.startDate,
-            endDate: tripReservation.endDate,
-            totalPaid: tripReservation.totalPaid,
-            status: 'cancelled',
-            createdAt: tripReservation.createdAt,
-        });
+            cancelTripReservationUseCase.execute({ tripId: '1337', userId: 'correct_owner_id' })
+        ).rejects.toEqual(new AppError(404, 'Trip not found'));
     });
-});
 
-afterAll(() => {
-    userRepository!.deleteAll();
-    tripRepository!.deleteAll();
-    tripReservationRepository!.deleteAll();
-    disconnect();
+    test('should be able to cancel a trip reservation', async () => {
+        jest.spyOn(tripReservationRepositoryMock, 'getById').mockResolvedValue({
+            id: '1337',
+            tripId: data[0].id!,
+            userId: 'correct_owner_id',
+            startDate: new Date(),
+            endDate: new Date(),
+            totalPaid: 100,
+            status: 'confirmed',
+            createdAt: new Date(),
+        });
+        const updatedTripReservation: TripReservation = {
+            id: '1337',
+            tripId: data[0].id!,
+            userId: 'correct_owner_id',
+            startDate: new Date(),
+            endDate: new Date(),
+            totalPaid: 100,
+            status: 'cancelled',
+            createdAt: new Date(),
+        };
+        jest.spyOn(tripReservationRepositoryMock, 'update').mockResolvedValue(updatedTripReservation);
+        jest.spyOn(tripRepositoryMock, 'getById').mockResolvedValue(data[0] as Trip);
+
+        await expect(
+            cancelTripReservationUseCase.execute({ tripId: '1337', userId: 'correct_owner_id' })
+        ).resolves.toEqual({ ...updatedTripReservation, trip: data[0] as Trip });
+    });
 });
