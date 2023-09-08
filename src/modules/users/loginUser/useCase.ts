@@ -5,7 +5,7 @@ import { ZodError } from 'zod';
 import { AppError } from '@/shared/errors/AppError';
 import { zodToString } from '@/shared/utils';
 import { IPasswordVerify } from '../passwordVerify/IPasswordVerify';
-import { generateJwt } from '@/shared/utils/jwt';
+import { IGenerateToken } from '../generateToken/IGenerateToken';
 
 export type LoginUseResponse = {
     user: User;
@@ -15,7 +15,8 @@ export type LoginUseResponse = {
 export class LoginUserUseCase {
     constructor(
         private repository: IUserRepository,
-        private passwordVerify: IPasswordVerify
+        private passwordVerify: IPasswordVerify,
+        private generateToken: IGenerateToken
     ) {}
     async execute({ email, password }: LoginUserDTO): Promise<LoginUseResponse> {
         try {
@@ -38,7 +39,7 @@ export class LoginUserUseCase {
             throw new AppError(401, 'Invalid password');
         }
 
-        const jwt = generateJwt({ id: user.id });
+        const jwt = this.generateToken.generate({ id: user.id });
 
         return { user, token: jwt };
     }
