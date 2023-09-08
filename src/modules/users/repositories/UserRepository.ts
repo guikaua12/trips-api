@@ -1,5 +1,5 @@
 import { IUserRepository } from '@/modules/users/repositories/IUserRepository';
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { RegisterUserDTO } from '@/modules/users/registerUser/dto';
 import { User } from '@/modules/users/models/User';
 import { pool } from '@/shared/database';

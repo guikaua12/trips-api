@@ -1,5 +1,5 @@
 import { ITripRepository } from '@/modules/trips/repositories/ITripRepository';
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { Trip } from '@/modules/trips/models/Trip';
 import { UpdateTripDTO } from '@/modules/trips/updateTrip/dto';
 import { CreateTripDTO } from '@/modules/trips/createTrip/dto';

@@ -1,7 +1,7 @@
 import { ITripReservationRepository } from '@/modules/tripReservations/repositories/ITripReservationRepository';
 import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
-import { Pool, QueryResult } from 'pg';
+import { Pool } from 'pg';
 import { v4 } from 'uuid';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/dto';
 import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/dto';
