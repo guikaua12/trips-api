@@ -56,15 +56,22 @@ export class GetAllTripReservationUseCase {
 
     async mapToResponse(tripReservations: TripReservation[]): Promise<TripReservationWithTrip[]> {
         const tripIds = tripReservations.map((tr) => tr.tripId);
-
         const trips = await this.tripRepository.getAllByIds(tripIds);
 
+        const map = new Map(trips.map((trip) => [trip.id, trip]));
+
         return tripReservations.map((tr): TripReservationWithTrip => {
-            const trip = trips.find((t) => t.id === tr.tripId);
+            const trip = map.get(tr.tripId);
 
             return {
-                ...tr,
+                id: tr.id,
                 trip: trip!,
+                userId: tr.userId,
+                startDate: tr.startDate,
+                endDate: tr.endDate,
+                totalPaid: tr.totalPaid,
+                status: tr.status,
+                createdAt: tr.createdAt,
             };
         });
     }
