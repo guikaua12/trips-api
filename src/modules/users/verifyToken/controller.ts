@@ -6,13 +6,8 @@ export class VerifyTokenController {
     async handle(req: Request | any, res: Response) {
         const userId = req.userId;
 
-        const user = await this.useCase.execute(userId);
+        const response = await this.useCase.execute(userId);
 
-        res.status(200).json({
-            user: {
-                id: user.id,
-                email: user.email,
-            },
-        });
+        res.status(200).json(response);
     }
 }
