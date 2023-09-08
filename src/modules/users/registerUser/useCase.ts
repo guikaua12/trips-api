@@ -4,11 +4,20 @@ import { AppError } from '@/shared/errors/AppError';
 import { RegisterUserDTO, RegisterUserDTOSchema } from '@/modules/users/registerUser/dto';
 import { zodToString } from '@/shared/utils';
 import { ZodError } from 'zod';
+import { IGenerateToken } from '../generateToken/IGenerateToken';
+
+export type RegisterUserResponse = {
+    user: Omit<User, 'password'>;
+    token: string;
+};
 
 export class RegisterUserUseCase {
-    constructor(private userRepository: IUserRepository) {}
+    constructor(
+        private userRepository: IUserRepository,
+        private generateToken: IGenerateToken
+    ) {}
 
-    async execute({ email, password }: RegisterUserDTO): Promise<User> {
+    async execute({ email, password }: RegisterUserDTO): Promise<RegisterUserResponse> {
         try {
             RegisterUserDTOSchema.parse({ email, password });
         } catch (error) {
@@ -20,6 +29,15 @@ export class RegisterUserUseCase {
         const user = await this.userRepository.search({ email });
         if (user) throw new AppError(409, 'User already exists');
 
-        return await this.userRepository.insert({ email, password });
+        const { id: insertedId, email: insertedEmail } = await this.userRepository.insert({ email, password });
+        const jwt = this.generateToken.generate({ id: insertedId });
+
+        return {
+            user: {
+                id: insertedId,
+                email: insertedEmail,
+            },
+            token: jwt,
+        };
     }
 }
