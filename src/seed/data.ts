@@ -1,4 +1,4 @@
-import { CreateTripDTO } from '@/modules/trips/createTrip/CreateTripDTO';
+import { CreateTripDTO } from '@/modules/trips/createTrip/dto';
 
 export const data: CreateTripDTO[] = [
     {
