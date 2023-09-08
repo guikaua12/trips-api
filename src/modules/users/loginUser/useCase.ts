@@ -5,13 +5,19 @@ import { ZodError } from 'zod';
 import { AppError } from '@/shared/errors/AppError';
 import { zodToString } from '@/shared/utils';
 import { IPasswordVerify } from '../passwordVerify/IPasswordVerify';
+import { generateJwt } from '@/shared/utils/jwt';
+
+export type LoginUseResponse = {
+    user: User;
+    token: string;
+};
 
 export class LoginUserUseCase {
     constructor(
         private repository: IUserRepository,
         private passwordVerify: IPasswordVerify
     ) {}
-    async execute({ email, password }: LoginUserDTO): Promise<User> {
+    async execute({ email, password }: LoginUserDTO): Promise<LoginUseResponse> {
         try {
             LoginUserDTOSchema.parse({ email, password });
         } catch (error) {
@@ -32,6 +38,8 @@ export class LoginUserUseCase {
             throw new AppError(401, 'Invalid password');
         }
 
-        return user;
+        const jwt = generateJwt({ id: user.id });
+
+        return { user, token: jwt };
     }
 }
