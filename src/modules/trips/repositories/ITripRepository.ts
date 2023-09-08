@@ -1,11 +1,10 @@
-import { QueryResult } from 'pg';
 import { Trip } from '@/modules/trips/models/Trip';
 import { UpdateTripDTO } from '@/modules/trips/updateTrip/dto';
 import { CreateTripDTO } from '@/modules/trips/createTrip/dto';
 import { SearchTripDTO } from '@/modules/trips/searchTrip/dto';
 
 export interface ITripRepository {
-    createTable(): Promise<QueryResult>;
+    createTable(): Promise<void>;
 
     insert(data: CreateTripDTO): Promise<Trip>;
 

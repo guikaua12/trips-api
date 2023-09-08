@@ -10,8 +10,8 @@ export class TripReservationRepository implements ITripReservationRepository {
     public static TABLE_NAME = 'trips_reservations';
     constructor(private pool: Pool) {}
 
-    async createTable(): Promise<QueryResult> {
-        return this.pool.query(
+    async createTable(): Promise<void> {
+        this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${TripReservationRepository.TABLE_NAME} (
                 "id" VARCHAR PRIMARY KEY, 
                 "tripId" VARCHAR, 

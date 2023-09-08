@@ -14,8 +14,8 @@ export class TripRepository implements ITripRepository {
         this.pool = pool;
     }
 
-    async createTable(): Promise<QueryResult> {
-        return this.pool.query(
+    async createTable(): Promise<void> {
+        this.pool.query(
             `CREATE TABLE IF NOT EXISTS ${TripRepository.TABLE_NAME} (` +
                 '"id" VARCHAR PRIMARY KEY, ' +
                 '"name" VARCHAR, ' +

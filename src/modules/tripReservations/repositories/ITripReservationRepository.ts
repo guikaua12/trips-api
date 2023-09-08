@@ -1,11 +1,10 @@
-import { QueryResult } from 'pg';
 import { TripReservation } from '@/modules/tripReservations/models/TripReservation';
 import { ReserveTripDTO } from '@/modules/tripReservations/reserveTrip/dto';
 import { UpdateTripReservationDTO } from '@/modules/tripReservations/updateTripReservation/dto';
 import { GetAllTripReservationDTOOutput } from '@/modules/tripReservations/getAllTripReservation/dto';
 
 export interface ITripReservationRepository {
-    createTable(): Promise<QueryResult>;
+    createTable(): Promise<void>;
 
     insert(data: ReserveTripDTO): Promise<TripReservation>;
 
