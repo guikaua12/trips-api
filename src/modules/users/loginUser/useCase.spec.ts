@@ -6,11 +6,15 @@ import { AppError } from '@/shared/errors/AppError';
 import { BcryptPasswordVerify } from '../passwordVerify/BcryptPasswordVerify';
 import { IPasswordVerify } from '../passwordVerify/IPasswordVerify';
 import { User } from '../models/User';
+import { IGenerateToken } from '../generateToken/IGenerateToken';
+import { JwtGenerateToken } from '../generateToken/JwtGenerateToken';
 
 describe('LoginUserUseCase test', () => {
     let userRepositoryMock: UserRepository;
 
     let passwordVerify: IPasswordVerify;
+
+    let generateToken: IGenerateToken;
 
     let loginUserUseCase: LoginUserUseCase;
 
@@ -19,7 +23,9 @@ describe('LoginUserUseCase test', () => {
 
         passwordVerify = new BcryptPasswordVerify();
 
-        loginUserUseCase = new LoginUserUseCase(userRepositoryMock, passwordVerify);
+        generateToken = new JwtGenerateToken();
+
+        loginUserUseCase = new LoginUserUseCase(userRepositoryMock, passwordVerify, generateToken);
     });
 
     afterEach(() => {
@@ -58,9 +64,11 @@ describe('LoginUserUseCase test', () => {
 
         jest.spyOn(userRepositoryMock, 'search').mockResolvedValue(searchValue);
         jest.spyOn(passwordVerify, 'verify').mockResolvedValue(true);
+        jest.spyOn(generateToken, 'generate').mockReturnValue('some_generated_token');
 
-        expect(loginUserUseCase.execute({ email: 'email@email.com', password: 'password' })).resolves.toEqual(
-            searchValue
-        );
+        expect(loginUserUseCase.execute({ email: 'email@email.com', password: 'password' })).resolves.toEqual({
+            user: searchValue,
+            token: 'some_generated_token',
+        });
     });
 });
