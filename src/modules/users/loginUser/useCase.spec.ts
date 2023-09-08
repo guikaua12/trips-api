@@ -67,7 +67,10 @@ describe('LoginUserUseCase test', () => {
         jest.spyOn(generateToken, 'generate').mockReturnValue('some_generated_token');
 
         expect(loginUserUseCase.execute({ email: 'email@email.com', password: 'password' })).resolves.toEqual({
-            user: searchValue,
+            user: {
+                id: 'some_id',
+                email: 'email@email.com',
+            },
             token: 'some_generated_token',
         });
     });

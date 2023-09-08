@@ -8,7 +8,7 @@ import { IPasswordVerify } from '../passwordVerify/IPasswordVerify';
 import { IGenerateToken } from '../generateToken/IGenerateToken';
 
 export type LoginUseResponse = {
-    user: User;
+    user: Omit<User, 'password'>;
     token: string;
 };
 
@@ -41,6 +41,12 @@ export class LoginUserUseCase {
 
         const jwt = this.generateToken.generate({ id: user.id });
 
-        return { user, token: jwt };
+        return {
+            user: {
+                id: user.id,
+                email: user.email,
+            },
+            token: jwt,
+        };
     }
 }
