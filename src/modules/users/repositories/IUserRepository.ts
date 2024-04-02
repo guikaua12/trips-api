@@ -12,4 +12,5 @@ export interface IUserRepository {
     deleteById(id: string): Promise<void | null>;
 
     deleteAll(): Promise<void | null>;
+    count(): Promise<number>;
 }

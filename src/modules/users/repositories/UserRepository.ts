@@ -65,4 +65,8 @@ export class UserRepository implements IUserRepository {
     async deleteAll(): Promise<void | null> {
         await pool.query(`DELETE FROM ${UserRepository.TABLE_NAME};`);
     }
+
+    async count(): Promise<number> {
+        return (await this.pool.query(`SELECT COUNT(*) FROM ${UserRepository.TABLE_NAME}`)).rows[0].count;
+    }
 }
