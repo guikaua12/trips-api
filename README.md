@@ -46,4 +46,13 @@ To set up the project locally, follow these steps:
     ```bash
     yarn install
     ```
+2. **Start the development server:**
+    ##### Using npm:
+    ```bash
+    npm run dev
+    ```
+   ##### Or using yarn:
+    ```bash
+    yarn dev
+    ```
 
